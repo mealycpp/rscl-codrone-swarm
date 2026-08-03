@@ -1,0 +1,522 @@
+from __future__ import annotations
+
+import argparse
+import asyncio
+import csv
+import glob
+import json
+import math
+import os
+import queue
+import random
+import subprocess
+import threading
+import time
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+import uvicorn
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+WEB_ROOT = PROJECT_ROOT / "web"
+ASSETS_ROOT = PROJECT_ROOT / "assets"
+LOG_ROOT = PROJECT_ROOT / "logs"
+
+ROLE_NAMES = ["LEADER", "FOLLOWER", "SUPPORT", "RESERVE"]
+ACCENTS = ["#ff2aa1", "#28d7ff", "#69ff9a", "#ffbd3f"]
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def discover_ports() -> list[str]:
+    ports = sorted(set(glob.glob("/dev/ttyACM*") + glob.glob("/dev/ttyUSB*")))
+    return ports
+
+
+@dataclass
+class DroneState:
+    drone_id: str
+    port: str
+    role: str
+    accent: str
+    connected: bool = False
+    flight_state: str = "STANDBY"
+    movement_state: str = "IDLE"
+    last_command: str = "NONE"
+    battery: float = 0.0
+    temperature_c: float = 0.0
+    pressure_pa: float = 0.0
+    elevation_m: float = 0.0
+    bottom_height_m: float = 0.0
+    acceleration_x: float = 0.0
+    acceleration_y: float = 0.0
+    acceleration_z: float = 0.0
+    gyro_roll: float = 0.0
+    gyro_pitch: float = 0.0
+    gyro_yaw: float = 0.0
+    roll: float = 0.0
+    pitch: float = 0.0
+    yaw: float = 0.0
+    x_m: float = 0.0
+    y_m: float = 0.0
+    z_m: float = 0.0
+    front_range_mm: float = 0.0
+    bottom_range_mm: float = 0.0
+    system_mode: str = "UNKNOWN"
+    flight_mode: str = "UNKNOWN"
+    control_flight_mode: str = "UNKNOWN"
+    headless: str = "UNKNOWN"
+    sensor_orientation: str = "UNKNOWN"
+    speed: float = 0.0
+    front_color: str = "UNKNOWN"
+    back_color: str = "UNKNOWN"
+    error_state: str = "NONE"
+    last_update: str = field(default_factory=utc_now)
+
+
+class DroneWorker(threading.Thread):
+    def __init__(self, index: int, port: str, simulate: bool, publish: callable):
+        super().__init__(name=f"drone-worker-{index}", daemon=True)
+        self.index = index
+        self.port = port
+        self.simulate = simulate
+        self.publish = publish
+        self.commands: queue.PriorityQueue[tuple[int, float, str, dict[str, Any]]] = queue.PriorityQueue()
+        self.stop_event = threading.Event()
+        self.drone: Any = None
+        self.state = DroneState(
+            drone_id=f"D{index}",
+            port=port,
+            role=ROLE_NAMES[index] if index < len(ROLE_NAMES) else f"MEMBER-{index}",
+            accent=ACCENTS[index] if index < len(ACCENTS) else "#b785ff",
+            battery=94.0 - index * 2 if simulate else 0.0,
+        )
+        self._log_file = None
+        self._csv_writer = None
+        self._last_colors = 0.0
+
+    def enqueue(self, command: str, priority: int = 10, **kwargs: Any) -> None:
+        self.commands.put((priority, time.monotonic(), command, kwargs))
+
+    def run(self) -> None:
+        self._open_log()
+        self.publish("event", {"level": "STATE", "message": f"{self.state.drone_id} worker ready on {self.port}"})
+        next_telemetry = time.monotonic()
+        try:
+            while not self.stop_event.is_set():
+                try:
+                    _, _, command, kwargs = self.commands.get(timeout=0.03)
+                    self._execute(command, kwargs)
+                except queue.Empty:
+                    pass
+                except Exception as exc:
+                    self.state.error_state = f"COMMAND: {exc}"
+                    self.publish("event", {"level": "ERROR", "message": f"{self.state.drone_id}: {exc}"})
+
+                now = time.monotonic()
+                if now >= next_telemetry:
+                    self._poll()
+                    next_telemetry = now + 0.18
+        finally:
+            self._disconnect()
+            if self._log_file:
+                self._log_file.close()
+
+    def stop(self) -> None:
+        self.stop_event.set()
+
+    def _open_log(self) -> None:
+        LOG_ROOT.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        path = LOG_ROOT / f"telemetry-{self.state.drone_id}-{stamp}.csv"
+        self._log_file = path.open("w", newline="", encoding="utf-8")
+        fields = list(asdict(self.state).keys())
+        self._csv_writer = csv.DictWriter(self._log_file, fieldnames=fields)
+        self._csv_writer.writeheader()
+
+    def _execute(self, command: str, kwargs: dict[str, Any]) -> None:
+        self.state.last_command = command.upper()
+        self.publish("event", {"level": "COMMAND", "message": f"{self.state.drone_id} <- {command.upper()}"})
+
+        if command == "connect":
+            self._connect()
+            return
+        if command == "disconnect":
+            self._disconnect()
+            return
+        if not self.state.connected:
+            raise RuntimeError("not connected")
+
+        if self.simulate:
+            self._execute_simulated(command, kwargs)
+            return
+
+        d = self.drone
+        if command == "takeoff":
+            self.state.flight_state = "TAKING OFF"
+            d.takeoff()
+            self.state.flight_state = "AIRBORNE"
+        elif command == "hover":
+            duration = float(kwargs.get("duration", 2.0))
+            self.state.flight_state = "HOVER"
+            d.hover(duration)
+            self.state.flight_state = "AIRBORNE"
+        elif command == "land":
+            self.state.flight_state = "LANDING"
+            d.land()
+            self.state.flight_state = "LANDED"
+        elif command == "emergency_stop":
+            d.emergency_stop()
+            self.state.flight_state = "MOTORS STOPPED"
+        elif command in {"forward", "backward", "left", "right"}:
+            distance = int(kwargs.get("distance_cm", 30))
+            speed = int(kwargs.get("speed", 40))
+            fn = {
+                "forward": d.move_forward,
+                "backward": d.move_backward,
+                "left": d.move_left,
+                "right": d.move_right,
+            }[command]
+            self.state.movement_state = command.upper()
+            fn(distance, "cm", speed)
+            self.state.movement_state = "IDLE"
+        elif command in {"turn_left", "turn_right"}:
+            degrees = int(kwargs.get("degrees", 45))
+            timeout = int(kwargs.get("timeout", 3))
+            fn = d.turn_left if command == "turn_left" else d.turn_right
+            self.state.movement_state = command.upper()
+            fn(degrees, timeout)
+            self.state.movement_state = "IDLE"
+        else:
+            raise RuntimeError(f"unsupported command: {command}")
+
+    def _connect(self) -> None:
+        if self.state.connected:
+            return
+        if self.simulate:
+            time.sleep(0.15)
+            self.state.connected = True
+            self.state.flight_state = "READY"
+            self.publish("event", {"level": "PASS", "message": f"{self.state.drone_id} simulation link established"})
+            return
+
+        try:
+            from codrone_edu.drone import Drone
+        except ImportError as exc:
+            raise RuntimeError("codrone-edu is not installed in this virtual environment") from exc
+
+        drone = Drone()
+        drone.pair(self.port)
+        battery = float(drone.get_battery())
+        if battery <= 0:
+            try:
+                drone.close()
+            except Exception:
+                pass
+            raise RuntimeError(f"pairing failed on {self.port}")
+        self.drone = drone
+        self.state.connected = True
+        self.state.battery = battery
+        self.state.flight_state = "READY"
+        self.publish("event", {"level": "PASS", "message": f"{self.state.drone_id} paired on {self.port} at {battery:.0f}%"})
+
+    def _disconnect(self) -> None:
+        if self.drone is not None:
+            try:
+                self.drone.close()
+            except Exception:
+                pass
+        self.drone = None
+        self.state.connected = False
+        self.state.flight_state = "STANDBY"
+
+    def _execute_simulated(self, command: str, kwargs: dict[str, Any]) -> None:
+        if command == "takeoff":
+            self.state.flight_state = "AIRBORNE"
+            self.state.bottom_height_m = 0.75
+            self.state.z_m = 0.75
+        elif command == "hover":
+            self.state.flight_state = "HOVER"
+            time.sleep(min(float(kwargs.get("duration", 2.0)), 0.6))
+            self.state.flight_state = "AIRBORNE"
+        elif command == "land":
+            self.state.flight_state = "LANDED"
+            self.state.bottom_height_m = 0.0
+            self.state.z_m = 0.0
+        elif command == "emergency_stop":
+            self.state.flight_state = "MOTORS STOPPED"
+            self.state.bottom_height_m = 0.0
+            self.state.z_m = 0.0
+        elif command == "forward":
+            self.state.y_m += float(kwargs.get("distance_cm", 30)) / 100.0
+        elif command == "backward":
+            self.state.y_m -= float(kwargs.get("distance_cm", 30)) / 100.0
+        elif command == "left":
+            self.state.x_m -= float(kwargs.get("distance_cm", 30)) / 100.0
+        elif command == "right":
+            self.state.x_m += float(kwargs.get("distance_cm", 30)) / 100.0
+        elif command == "turn_left":
+            self.state.yaw = (self.state.yaw - float(kwargs.get("degrees", 45))) % 360
+        elif command == "turn_right":
+            self.state.yaw = (self.state.yaw + float(kwargs.get("degrees", 45))) % 360
+        else:
+            raise RuntimeError(f"unsupported command: {command}")
+
+    def _poll(self) -> None:
+        if self.simulate:
+            self._poll_simulated()
+        elif self.state.connected and self.drone is not None:
+            self._poll_live()
+        self.state.last_update = utc_now()
+        row = asdict(self.state)
+        if self._csv_writer:
+            self._csv_writer.writerow(row)
+            self._log_file.flush()
+        self.publish("telemetry", row)
+
+    def _poll_simulated(self) -> None:
+        t = time.monotonic() + self.index
+        self.state.temperature_c = 24.5 + math.sin(t / 5) * 0.6
+        self.state.pressure_pa = 101325 + math.sin(t / 3) * 30
+        self.state.roll = math.sin(t * 1.4) * 2.5
+        self.state.pitch = math.cos(t * 1.1) * 2.2
+        self.state.gyro_roll = math.sin(t * 2.0) * 4
+        self.state.gyro_pitch = math.cos(t * 1.7) * 4
+        self.state.gyro_yaw = math.sin(t) * 3
+        self.state.acceleration_x = math.sin(t * 1.3) * 0.05
+        self.state.acceleration_y = math.cos(t * 1.2) * 0.05
+        self.state.acceleration_z = 1.0 + math.sin(t * 2.1) * 0.02
+        self.state.front_range_mm = 720 + math.sin(t / 2) * 90
+        self.state.bottom_range_mm = max(0, self.state.bottom_height_m * 1000)
+        self.state.system_mode = "SIMULATION"
+        self.state.flight_mode = self.state.flight_state
+        self.state.control_flight_mode = "POSITION"
+        self.state.headless = "OFF"
+        self.state.sensor_orientation = "NORMAL"
+        self.state.speed = abs(math.sin(t)) * 0.2
+        self.state.battery = max(0, self.state.battery - 0.002)
+        self.state.front_color = "CYAN"
+        self.state.back_color = "MAGENTA"
+        self.state.error_state = "NONE"
+
+    def _poll_live(self) -> None:
+        try:
+            values = self.drone.get_sensor_data(0.03)
+            if values and len(values) >= 31:
+                self.state.temperature_c = float(values[1])
+                self.state.pressure_pa = float(values[2])
+                self.state.elevation_m = float(values[3])
+                self.state.bottom_height_m = float(values[4])
+                self.state.acceleration_x = float(values[6]) / 10.0
+                self.state.acceleration_y = float(values[7]) / 10.0
+                self.state.acceleration_z = float(values[8]) / 10.0
+                self.state.gyro_roll = float(values[9])
+                self.state.gyro_pitch = float(values[10])
+                self.state.gyro_yaw = float(values[11])
+                self.state.roll = float(values[12])
+                self.state.pitch = float(values[13])
+                self.state.yaw = float(values[14])
+                self.state.x_m = float(values[16])
+                self.state.y_m = float(values[17])
+                self.state.z_m = float(values[18])
+                self.state.front_range_mm = float(values[20])
+                self.state.bottom_range_mm = float(values[21])
+                self.state.system_mode = str(values[23])
+                self.state.flight_mode = str(values[24])
+                self.state.control_flight_mode = str(values[25])
+                self.state.movement_state = str(values[26])
+                self.state.headless = str(values[27])
+                self.state.sensor_orientation = str(values[28])
+                self.state.battery = float(values[29])
+                self.state.speed = float(values[30])
+            try:
+                self.state.error_state = str(self.drone.get_error_data(0.02))
+            except Exception:
+                pass
+            now = time.monotonic()
+            if now - self._last_colors > 2.5:
+                try:
+                    colors = self.drone.get_colors()
+                    if isinstance(colors, (tuple, list)) and len(colors) >= 2:
+                        self.state.front_color = str(colors[0])
+                        self.state.back_color = str(colors[1])
+                except Exception:
+                    pass
+                self._last_colors = now
+        except Exception as exc:
+            self.state.error_state = f"TELEMETRY: {exc}"
+
+
+class FleetController:
+    def __init__(self, simulate: bool, loop: asyncio.AbstractEventLoop):
+        self.simulate = simulate
+        self.loop = loop
+        self.workers: dict[str, DroneWorker] = {}
+        self.states: dict[str, dict[str, Any]] = {}
+        self.websockets: set[WebSocket] = set()
+        self.events: list[dict[str, Any]] = []
+        self.lock = threading.Lock()
+        self.scan()
+
+    def scan(self) -> list[str]:
+        ports = ["SIM-D0", "SIM-D1"] if self.simulate else discover_ports()
+        with self.lock:
+            existing_ports = {w.port for w in self.workers.values()}
+            for index, port in enumerate(ports):
+                if port in existing_ports:
+                    continue
+                worker = DroneWorker(index, port, self.simulate, self.publish_from_thread)
+                self.workers[worker.state.drone_id] = worker
+                self.states[worker.state.drone_id] = asdict(worker.state)
+                worker.start()
+        self.publish_from_thread("event", {"level": "SCAN", "message": f"Discovered {len(ports)} controller(s): {', '.join(ports) if ports else 'none'}"})
+        return ports
+
+    def publish_from_thread(self, kind: str, payload: dict[str, Any]) -> None:
+        if kind == "telemetry":
+            with self.lock:
+                self.states[payload["drone_id"]] = payload
+        elif kind == "event":
+            payload = {**payload, "timestamp": utc_now()}
+            with self.lock:
+                self.events.append(payload)
+                self.events = self.events[-200:]
+        try:
+            asyncio.run_coroutine_threadsafe(self.broadcast(kind, payload), self.loop)
+        except RuntimeError:
+            pass
+
+    async def broadcast(self, kind: str, payload: dict[str, Any]) -> None:
+        message = json.dumps({"type": kind, "payload": payload})
+        dead: list[WebSocket] = []
+        for ws in tuple(self.websockets):
+            try:
+                await ws.send_text(message)
+            except Exception:
+                dead.append(ws)
+        for ws in dead:
+            self.websockets.discard(ws)
+
+    def snapshot(self) -> dict[str, Any]:
+        with self.lock:
+            drones = [self.states[k] for k in sorted(self.states)]
+            events = list(self.events[-80:])
+        return {"simulate": self.simulate, "drones": drones, "events": events, "ports": [w.port for w in self.workers.values()]}
+
+    def targets(self, target: str) -> list[DroneWorker]:
+        if target == "ALL":
+            return list(self.workers.values())
+        worker = self.workers.get(target)
+        if not worker:
+            raise KeyError(target)
+        return [worker]
+
+    def command(self, target: str, command: str, params: dict[str, Any]) -> None:
+        priority = 0 if command == "emergency_stop" else 10
+        for worker in self.targets(target):
+            worker.enqueue(command, priority=priority, **params)
+
+    def shutdown(self) -> None:
+        for worker in self.workers.values():
+            worker.stop()
+        for worker in self.workers.values():
+            worker.join(timeout=1.5)
+
+
+def create_app(simulate: bool) -> FastAPI:
+    app = FastAPI(title="RSCL CoDrone Swarm Command Center", version="0.3.0")
+    controller_holder: dict[str, FleetController] = {}
+
+    @app.on_event("startup")
+    async def startup() -> None:
+        controller_holder["controller"] = FleetController(simulate, asyncio.get_running_loop())
+
+    @app.on_event("shutdown")
+    async def shutdown() -> None:
+        controller = controller_holder.get("controller")
+        if controller:
+            controller.shutdown()
+
+    @app.get("/")
+    async def index() -> FileResponse:
+        return FileResponse(WEB_ROOT / "index.html")
+
+    @app.get("/api/status")
+    async def status() -> JSONResponse:
+        return JSONResponse(controller_holder["controller"].snapshot())
+
+    @app.post("/api/scan")
+    async def scan() -> JSONResponse:
+        ports = controller_holder["controller"].scan()
+        return JSONResponse({"ok": True, "ports": ports})
+
+    @app.post("/api/command")
+    async def command(request: Request) -> JSONResponse:
+        data = await request.json()
+        target = str(data.get("target", "ALL")).upper()
+        cmd = str(data.get("command", "")).lower()
+        params = data.get("params") or {}
+        allowed = {"connect", "disconnect", "takeoff", "hover", "land", "emergency_stop", "forward", "backward", "left", "right", "turn_left", "turn_right"}
+        if cmd not in allowed:
+            raise HTTPException(400, f"unsupported command: {cmd}")
+        if cmd == "emergency_stop" and data.get("confirm") is not True:
+            raise HTTPException(400, "emergency stop requires confirm=true")
+        try:
+            controller_holder["controller"].command(target, cmd, params)
+        except KeyError:
+            raise HTTPException(404, f"unknown target: {target}")
+        return JSONResponse({"ok": True, "target": target, "command": cmd})
+
+    @app.websocket("/ws")
+    async def websocket_endpoint(ws: WebSocket) -> None:
+        await ws.accept()
+        controller = controller_holder["controller"]
+        controller.websockets.add(ws)
+        await ws.send_json({"type": "snapshot", "payload": controller.snapshot()})
+        try:
+            while True:
+                await ws.receive_text()
+        except WebSocketDisconnect:
+            controller.websockets.discard(ws)
+        except Exception:
+            controller.websockets.discard(ws)
+
+    app.mount("/assets", StaticFiles(directory=ASSETS_ROOT), name="assets")
+    app.mount("/static", StaticFiles(directory=WEB_ROOT), name="static")
+    return app
+
+
+def open_windows_browser(url: str) -> None:
+    cmd = Path("/mnt/c/Windows/System32/cmd.exe")
+    if cmd.exists():
+        try:
+            subprocess.Popen([str(cmd), "/c", "start", "", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception:
+            pass
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="RSCL CoDrone EDU browser command center")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--simulate", action="store_true", help="run with two simulated drones")
+    mode.add_argument("--live", action="store_true", help="run against attached CoDrone EDU controllers")
+    parser.add_argument("--host", default="0.0.0.0")
+    parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument("--no-browser", action="store_true")
+    args = parser.parse_args()
+
+    simulate = not args.live
+    url = f"http://localhost:{args.port}"
+    print("\nRSCL CoDrone Swarm Command Center")
+    print(f"Mode: {'SIMULATION' if simulate else 'LIVE'}")
+    print(f"Dashboard: {url}\n")
+    if not args.no_browser:
+        threading.Timer(1.2, open_windows_browser, args=(url,)).start()
+    uvicorn.run(create_app(simulate), host=args.host, port=args.port, log_level="info")

@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RSCL Swarm Command Center</title>
+  <link rel="stylesheet" href="/static/styles.css?v=052" />
+</head>
+<body>
+  <div class="scanlines"></div>
+  <header class="topbar">
+    <div class="brand">
+      <img src="/assets/rscl_logo.png" alt="RSCL logo" onerror="this.style.display='none'" />
+      <div>
+        <h1>RSCL SWARM COMMAND CENTER</h1>
+        <p>Reconfigurable Space Computing Lab at CPP</p>
+      </div>
+    </div>
+    <div class="status-strip">
+      <span id="modeBadge" class="badge">SIMULATION</span>
+      <span id="autoBadge" class="badge violet">AUTO-DETECT</span>
+      <span id="linkBadge" class="badge dim">LINKING</span>
+      <span id="clock">--:--:--</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel theme-lab physical-light-lab">
+      <div class="panel-title">
+        <span>PHYSICAL DRONE LED STUDIO // ARBITRARY RGB + MISSION-SYNCHRONIZED LIGHTING</span>
+        <span id="lightState">READY</span>
+      </div>
+      <div class="theme-layout">
+        <div class="theme-zone">
+          <div class="subhead">DIRECT PHYSICAL-DRONE LIGHT CONTROL</div>
+          <div class="physical-light-controls">
+            <label>Target<select id="lightTarget"><option>ALL</option></select></label>
+            <label>Color<input id="physicalColor" type="color" value="#28d7ff" /></label>
+            <label>Brightness<input id="physicalBrightness" type="range" min="0" max="100" value="100" /><output id="brightnessReadout">100%</output></label>
+            <button id="applyPhysicalColor" class="green">APPLY SOLID COLOR</button>
+            <button id="physicalLedOff">TURN DRONE LED OFF</button>
+          </div>
+          <div class="subhead">QUICK PHYSICAL COLORS</div>
+          <div class="physical-color-presets">
+            <button data-led-color="#ff0000" style="--swatch:#ff0000">RED</button>
+            <button data-led-color="#ff7a00" style="--swatch:#ff7a00">ORANGE</button>
+            <button data-led-color="#ffe600" style="--swatch:#ffe600">YELLOW</button>
+            <button data-led-color="#00ff45" style="--swatch:#00ff45">GREEN</button>
+            <button data-led-color="#00ffff" style="--swatch:#00ffff">CYAN</button>
+            <button data-led-color="#0066ff" style="--swatch:#0066ff">BLUE</button>
+            <button data-led-color="#7d3cff" style="--swatch:#7d3cff">VIOLET</button>
+            <button data-led-color="#ff00c8" style="--swatch:#ff00c8">MAGENTA</button>
+            <button data-led-color="#ffffff" style="--swatch:#ffffff">WHITE</button>
+            <button data-led-color="#000000" style="--swatch:#000000">OFF</button>
+          </div>
+          <div class="subhead">PHYSICAL LED ANIMATIONS</div>
+          <div class="light-show-actions">
+            <button id="runPulse" class="cyan">PULSE SELECTED COLOR</button>
+            <button id="runStrobe" class="magenta">STROBE SELECTED COLOR</button>
+            <button id="runColorChase" class="amber">COLOR CHASE</button>
+            <button id="runRainbowSequence" class="violet">RAINBOW SEQUENCE</button>
+            <button id="abortLightShow" class="abort">STOP LIGHT SHOW</button>
+          </div>
+          <div class="light-note">All controls above command the LED mounted on the physical CoDrone EDU, not the browser theme. Brightness uses the documented 0–100 range.</div>
+        </div>
+
+        <div class="lighting-zone">
+          <div class="subhead">PER-DRONE PHYSICAL COLORS + MISSION PALETTE</div>
+          <div id="paletteEditor" class="palette-editor"></div>
+          <div class="palette-actions">
+            <button id="randomPalette" class="violet">RANDOM DRONE PALETTE</button>
+            <button id="savePalette" class="green">SAVE DRONE PALETTE</button>
+            <button id="roleColors" class="cyan">ASSIGN ROLE COLORS</button>
+          </div>
+          <div id="droneColorMap" class="drone-color-map"></div>
+          <div class="palette-actions">
+            <label>Brightness<input id="fleetBrightness" type="number" min="0" max="100" value="100" /></label>
+            <button id="applyDroneColors" class="green">APPLY TO PHYSICAL DRONES</button>
+            <button id="rotateDroneColors" class="amber">ROTATE PHYSICAL COLORS</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel mission-lab">
+      <div class="panel-title">
+        <span>MISSION LAB // ADVANCED OPEN-LOOP SWARM CHOREOGRAPHY</span>
+        <span id="missionState" class="mission-state">READY</span>
+      </div>
+      <div class="safety-banner">
+        Role-phased missions are coordinated open-loop choreography. Reported local optical-flow positions are not a shared global reference and are not collision avoidance.
+      </div>
+      <div class="mission-layout">
+        <div class="preset-zone">
+          <div class="subhead">SCIENTIFIC MISSION PRESETS</div>
+          <div class="preset-grid">
+            <button class="preset-card magenta" data-preset="zigzag"><strong>ZIGZAG</strong><span>Baseline lateral weave with color phases</span></button>
+            <button class="preset-card cyan" data-preset="spiral"><strong>SPIRAL</strong><span>Increasing path length and repeated yaw</span></button>
+            <button class="preset-card green" data-preset="neon_weave"><strong>NEON WEAVE</strong><span>Translational weave synchronized to LED maps</span></button>
+            <button class="preset-card amber" data-preset="color_wave"><strong>COLOR WAVE</strong><span>Phase-delayed illumination propagation</span></button>
+            <button class="preset-card violet" data-preset="box"><strong>ORBIT BOX</strong><span>Closed four-segment route with chroma states</span></button>
+            <button class="preset-card magenta" data-preset="split_merge"><strong>SPLIT / MERGE</strong><span>Role-indexed divergence, translation, and convergence</span></button>
+            <button class="preset-card cyan" data-preset="wavefront"><strong>WAVEFRONT</strong><span>Time-phased forward and reverse propagation</span></button>
+            <button class="preset-card green" data-preset="pinwheel"><strong>PINWHEEL</strong><span>Counter-rotating yaw groups and radial translation</span></button>
+            <button class="preset-card amber" data-preset="helix"><strong>DUAL HELIX</strong><span>Alternating yaw directions with expanding segments</span></button>
+            <button class="preset-card violet" data-preset="braid"><strong>CHROMA BRAID</strong><span>Role-alternating lanes, crossings, and color channels</span></button>
+            <button class="preset-card magenta" data-preset="starburst"><strong>STARBURST / REJOIN</strong><span>Role-indexed angular divergence, radial excursion, and synchronized return</span></button>
+            <button class="preset-card cyan" data-preset="relay"><strong>LEADER–FOLLOWER RELAY</strong><span>Phase-delayed motion baton with physical color transfer</span></button>
+            <button class="preset-card green" data-preset="accordion"><strong>SWARM ACCORDION</strong><span>Repeated fleet expansion, compression, translation, and recoloring</span></button>
+            <button class="preset-card amber" data-preset="figure_eight"><strong>FIGURE-EIGHT PHASE</strong><span>Two-lobe open-loop path with alternating yaw and chromatic phase changes</span></button>
+          </div>
+          <div class="mission-params">
+            <label>Target<select id="missionTarget"><option>ALL</option></select></label>
+            <label>Repeats<input id="missionRepeats" type="number" min="1" max="6" value="2" /></label>
+            <label>Distance<input id="missionDistance" type="number" min="10" max="80" value="30" /><small>cm</small></label>
+            <label>Speed<input id="missionSpeed" type="number" min="10" max="70" value="35" /><small>%</small></label>
+            <label>Turn<input id="missionDegrees" type="number" min="15" max="120" value="45" /><small>deg</small></label>
+            <label>Phase<input id="missionPhase" type="number" min="0" max="1200" value="220" /><small>ms</small></label>
+            <label>LED Brightness<input id="missionLedBrightness" type="number" min="0" max="100" value="100" /><small>%</small></label>
+            <label>Min Battery<input id="missionBattery" type="number" min="10" max="80" value="25" /><small>%</small></label>
+            <label class="check"><input id="missionTakeoff" type="checkbox" /> auto takeoff</label>
+            <label class="check"><input id="missionLand" type="checkbox" /> auto land</label>
+          </div>
+          <div class="preset-actions">
+            <button id="previewPreset" class="cyan">PREVIEW SELECTED</button>
+            <button id="runPreset" class="green">RUN SELECTED</button>
+          </div>
+          <div id="missionPreview" class="mission-preview">Select a mission preset to inspect its generated sequence.</div>
+        </div>
+
+        <div class="composer-zone">
+          <div class="subhead">CUSTOM TIMELINE COMPOSER</div>
+          <div class="composer-controls">
+            <select id="stepAction">
+              <option value="takeoff">TAKEOFF</option>
+              <option value="hover">HOVER</option>
+              <option value="forward">FORWARD</option>
+              <option value="backward">BACKWARD</option>
+              <option value="left">LEFT</option>
+              <option value="right">RIGHT</option>
+              <option value="turn_left">TURN LEFT</option>
+              <option value="turn_right">TURN RIGHT</option>
+              <option value="set_led">SET LED</option>
+              <option value="color_wave">COLOR WAVE</option>
+              <option value="wait">WAIT</option>
+              <option value="land">LAND</option>
+            </select>
+            <input id="stepValue" type="number" min="0" max="360" value="30" title="Distance, degrees, or seconds depending on action" />
+            <input id="stepColor" type="color" value="#28d7ff" title="LED color" />
+
+            <button id="addStep" class="cyan">ADD STEP</button>
+          </div>
+          <div id="timeline" class="timeline"><div class="empty-timeline">Build a custom mission one step at a time.</div></div>
+          <div class="composer-actions">
+            <button id="clearTimeline">CLEAR</button>
+            <button id="runCustom" class="green">RUN CUSTOM</button>
+            <button id="abortMission" class="abort">ABORT MISSION → HOVER</button>
+          </div>
+          <div class="progress-shell"><div id="missionProgress" class="progress-bar"></div></div>
+          <div id="missionReadout" class="mission-readout">No mission active.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel controls-panel">
+      <div class="panel-title">FLEET CONTROL</div>
+      <div class="control-grid">
+        <button class="cyan" data-command="scan">SCAN NOW</button>
+        <button class="green" data-command="connect">CONNECT</button>
+        <button class="magenta" data-command="takeoff">TAKEOFF</button>
+        <button data-command="hover">HOVER</button>
+        <button class="amber" data-command="land">LAND NOW</button>
+        <select id="targetSelect"><option>ALL</option></select>
+      </div>
+      <div class="movement-grid">
+        <button data-command="turn_left">TURN L</button>
+        <button data-command="forward">FORWARD</button>
+        <button data-command="turn_right">TURN R</button>
+        <button data-command="left">LEFT</button>
+        <button data-command="backward">BACK</button>
+        <button data-command="right">RIGHT</button>
+      </div>
+      <div class="parameter-row">
+        <label>Distance <input id="distance" type="number" min="10" max="200" value="30" /> cm</label>
+        <label>Speed <input id="speed" type="number" min="10" max="100" value="40" /> %</label>
+        <label>Turn <input id="degrees" type="number" min="15" max="360" value="45" /> deg</label>
+      </div>
+      <div class="led-console">
+        <span>PHYSICAL DRONE LIGHT</span>
+        <input id="quickColor" type="color" value="#28d7ff" />
+        <input id="quickBrightness" type="number" min="0" max="100" value="100" title="Physical LED brightness" />
+        <button id="setLed" class="cyan">SET PHYSICAL COLOR</button>
+        <button id="ledOff">OFF</button>
+      </div>
+      <button id="emergency" class="emergency">HOLD 2 SECONDS — EMERGENCY MOTOR STOP</button>
+    </section>
+
+    <section class="panel radar-panel">
+      <div class="panel-title">REPORTED LOCAL POSITION</div>
+      <div class="radar" id="radar"><div class="sweep"></div><div class="core">RSCL</div></div>
+      <div class="fleet-summary" id="fleetSummary">Awaiting telemetry</div>
+    </section>
+
+    <section class="panel drones-panel">
+      <div class="panel-title">DRONE TELEMETRY</div>
+      <div id="droneCards" class="drone-cards"></div>
+    </section>
+
+    <section class="panel event-panel">
+      <div class="panel-title">MISSION EVENT STREAM</div>
+      <div id="events" class="events"></div>
+    </section>
+  </main>
+
+  <footer>Designed by Director of RSCL Dr. Mohamed El-Hadedy · Physical LED + Advanced Mission Fabric v0.5.2</footer>
+  <script src="/static/app.js?v=052"></script>
+</body>
+</html>

@@ -1,5 +1,9 @@
 .venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+build/
+dist/
 logs/*
-!.gitkeep
+!logs/.gitkeep
+.qmlcache/
