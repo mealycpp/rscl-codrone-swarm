@@ -1,9 +1,31 @@
 .venv/
+venv/
 __pycache__/
 *.py[cod]
+*.so
 *.egg-info/
-build/
-dist/
-logs/*
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime and generated data
+logs/*.csv
+logs/*.json
+logs/*.log
 !logs/.gitkeep
-.qmlcache/
+
+# Local backups and migration artifacts
+backup-*/
+legacy_qml_backup_*/
+*.before-*
+*.bak-*
+*.bak
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Old native-GUI experiments
+qml/
