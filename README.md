@@ -278,9 +278,21 @@ For each flight experiment, record:
 }
 ```
 
-## Acknowledgment
+## Acknowledgments
 
-This work is supported in part by grants from the **Air Force Research Laboratory (AFRL)** and the **U.S. Navy**. Any opinions, findings, conclusions, or recommendations expressed are those of the author and do not necessarily reflect the official views or policies of the sponsoring organizations.
+This work is supported in part by:
+
+<p align="center">
+  <img src="docs/images/sponsors/afrl.png" alt="Air Force Research Laboratory" height="190"/>
+  &nbsp;&nbsp;
+  <img src="docs/images/sponsors/onr_sfrp.png" alt="Office of Naval Research Summer Faculty Research Program" height="190"/>
+  &nbsp;&nbsp;
+  <img src="docs/images/sponsors/us_dod.png" alt="United States Department of Defense" height="190"/>
+  &nbsp;&nbsp;
+  <img src="docs/images/sponsors/us_navy_neec.png" alt="United States Navy NEEC" height="190"/>
+</p>
+
+The views and conclusions in this repository are those of the authors and should not be interpreted as representing the official policies, either expressed or implied, of the sponsors or the U.S. Government.
 
 ## RSCL
 
