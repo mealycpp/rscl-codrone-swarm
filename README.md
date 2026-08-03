@@ -296,7 +296,11 @@ The views and conclusions in this repository are those of the authors and should
 
 ## RSCL
 
-**Reconfigurable Space Computing Lab**  
+<p align="center">
+  <img src="docs/images/rscl-logo.png" width="280" alt="Reconfigurable Space Computing Lab at CPP emblem">
+</p>
+
+**Reconfigurable Space Computing Lab at CPP**  
 California State Polytechnic University, Pomona  
 Director: **Dr. Mohamed El-Hadedy**
 
