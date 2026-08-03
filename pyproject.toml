@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rscl-codrone-swarm"
+version = "0.1.0"
+description = "RSCL CoDrone EDU swarm research and demonstration platform"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "codrone-edu==2.8",
+    "pyserial>=3.5",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
