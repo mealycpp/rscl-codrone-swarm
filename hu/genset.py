@@ -34,29 +34,42 @@ def num_variant(n, unit_cm=True, rng=None):
         if n == 100: forms.append("one meter")
     return rng.choice(forms)
 
+PARA_V2 = True
 VERBS = {
  "TAKEOFF": ["take off","launch","lift off","get airborne","spool up and take off",
              "up you go","get in the air","start flying"],
  "LAND":    ["land","touch down","set down","come down and land","put it down",
              "get on the ground","wrap it up and land"],
- "HOVER":   ["hover","hold position","hold still","stay put","hold there","loiter"],
- "MOVE":    ["move","go","fly","head","slide","shift"],
- "TURN":    ["turn","rotate","spin","yaw"],
- "UP":      ["go up","climb","rise","ascend","gain altitude","up"],
- "DOWN":    ["go down","descend","drop","lower","come down a bit","down"],
- "STOP":    ["stop","abort","hold everything","freeze","cancel that","stop now"],
+ "HOVER":   ["hover","hold position","hold still","stay put","hold there","loiter",
+             "maintain position","stay right there","hold altitude","keep station",
+             "hold where you are","stay in place","hold steady","freeze in place",
+             "maintain hover","just hover there"],
+ "MOVE":    ["move","go","fly","head","slide","shift","proceed","travel","cruise",
+             "push","scoot","drift","make your way","advance"],
+ "TURN":    ["turn","rotate","spin","yaw","pivot","swing","come around","face around"],
+ "UP":      ["go up","climb","rise","ascend","gain altitude","up","get higher",
+             "increase altitude","climb up","move up","gain some height","higher please"],
+ "DOWN":    ["go down","descend","drop","lower","come down a bit","down","get lower",
+             "reduce altitude","lose some height","ease down","come down some","lower yourself"],
+ "STOP":    ["stop","abort","hold everything","freeze","cancel that","stop now","belay that",
+             "cancel the maneuver","abort the maneuver","cease movement","knock it off",
+             "disregard and hold","full stop"],
 }
 
 COLLECTIVES = ["everyone","everybody","all drones","all of you","the whole fleet",
-               "all units","the fleet","all"]
-PAIR_JOINERS = [" and ", " plus ", ", "]
-EXCEPT_WORDS = ["except","but not","minus","excluding","apart from","leaving out"]
+               "all units","the fleet","all","the whole squad","the entire fleet",
+               "every drone","all three of you","the team","the whole gang","full fleet",
+               "all birds","the squadron"]
+PAIR_JOINERS = [" and ", " plus ", ", ", " together with ", " along with ", " & "]
+EXCEPT_WORDS = ["except","but not","minus","excluding","apart from","leaving out",
+                "other than","besides","save for","not including","skip","without"]
 INDEX_WORDS = {0:["drone one","drone 1","the first drone","number one"],
                1:["drone two","drone 2","the second drone","number two"],
                2:["drone three","drone 3","the third drone","number three"]}
 
-POLITE = ["please ","","","kindly ",""]
-NOW = ["", "", " now", " right away", " for me", " when ready"]
+POLITE = ["please ","","","kindly ","","would you ","can you ","go ahead and "]
+NOW = ["", "", " now", " right away", " for me", " when ready", " immediately",
+       " at once", " whenever you are ready", " on my mark", " if you can"]
 
 def sample_target_expr(rng, roster, allow_absent=False):
     kind = rng.choices(["name","index","all","pair","except"],
@@ -149,6 +162,9 @@ UNSAFE = ["{name}, forward five meters","everyone up 3 meters","{name} move ahea
  "turn 720 degrees {name}","{name}, hover for ten minutes","all drones climb 500 cm"]
 NEGATION = ["{name}, don't take off","don't land yet {name}","{name} do not move",
  "nobody take off","everyone, don't land right now","{name}, whatever you do, don't descend"]
+STRESS = ["land","LAND","land now","land land land","everybody down now",
+ "stop","STOP","stop stop stop","all stop","get down now","down now everyone",
+ "abort","abort abort","everyone land immediately","bring them down"]
 UNADDR = ["take off","land now","hover for five seconds","move forward 50","go up 30",
  "turn ninety degrees clockwise","stop","please land","up you go"]
 EMBED = ["check the radar for weather","what's the range on these controllers",
@@ -156,16 +172,21 @@ EMBED = ["check the radar for weather","what's the range on these controllers",
  "grab the orange charger","is the radio ok"]
 
 def gen_negative(rng, roster):
-    sub = rng.choices(["garbage","idiom","oov","unsafe","negation","unaddressed","embedded"],
-                      weights=[18,15,15,14,14,14,10])[0]
+    sub = rng.choices(["garbage","idiom","oov","unsafe","negation","unaddressed","embedded","stress"],
+                      weights=[16,13,13,13,12,12,9,12])[0]
     n1 = rng.choice(roster); n2 = rng.choice([x for x in roster if x != n1])
     pick = {"garbage":GARBAGE,"idiom":IDIOMS,"oov":OOV,"unsafe":UNSAFE,
-            "negation":NEGATION,"unaddressed":UNADDR,"embedded":EMBED}[sub]
+            "negation":NEGATION,"unaddressed":UNADDR,"embedded":EMBED,"stress":STRESS}[sub]
     utt = rng.choice(pick).format(name=n1, name2=n2)
+    if sub == "stress":
+        act = "STOP" if "stop" in utt.lower() or "abort" in utt.lower() else "LAND"
+        return utt, act, {}, {"type":"ALL"}, sub
     if sub == "unaddressed":
         act = {"take off":"TAKEOFF","land":"LAND","hover":"HOVER","move":"MOVE",
                "up you":"TAKEOFF","go up":"UP","turn":"TURN","stop":"STOP"}
         action = next((a for k,a in act.items() if k in utt), "LAND")
+        if action in ("LAND", "STOP"):
+            return utt, action, {}, {"type":"ALL"}, sub
         return utt, action, {}, {"type":"EMPTY"}, sub
     return utt, "REFUSE", {"reason": sub}, {"type":"EMPTY"}, sub
 

@@ -61,6 +61,23 @@ def make_hu_router(controller_holder, name_map=None):
     async def hu_command(request: Request):
         data = await request.json()
         utt = str(data.get("utterance", ""))
+        # EMERGENCY channel: bare safety utterances act fleet-wide, no gating.
+        # Fires only in the safe direction (land/stop); never takeoff/move.
+        _em = utt.lower().strip(" .!?")
+        if _em in {"land", "land now", "land land land", "stop", "stop stop stop",
+                   "all stop", "everybody down", "everyone down", "emergency", "abort", "khalas", "yalla land"}:
+            act = "STOP" if "stop" in _em or _em == "abort" else "LAND"
+            names = list(hu.roster())
+            ok, derr = do_dispatch(act, names, {})
+            cid = uuid.uuid4().hex[:8]
+            _log(ts=time.time(), cmd_id=cid, utterance=utt, action=act,
+                 targets="|".join(names), params="{}", confidence=1.0,
+                 band="EMERGENCY", reason="emergency override -> fleet-wide",
+                 parse_ms=0, dispatched=ok, dispatch_error=derr)
+            return JSONResponse({"cmd_id": cid, "utterance": utt, "action": act,
+                "targets": names, "params": {}, "confidence": 1.0,
+                "band": "EMERGENCY", "reason": "emergency override -> fleet-wide",
+                "latency_ms": 0, "dispatched": ok})
         src = str(data.get("source", "typed"))
         r = hu.parse(utt)
         cid = uuid.uuid4().hex[:8]

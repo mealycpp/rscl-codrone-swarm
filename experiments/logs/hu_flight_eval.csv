@@ -1,1 +1,90 @@
 ts,block,utterance,expected,action,targets,params,confidence,band,latency_ms,dispatched,operator_verdict,note
+1786306597.308282,T1-batch1,"Horus, take off",TAKEOFF,TAKEOFF,Horus,{},0.926,EXECUTE,188.3,True,y,none
+1786306605.0010736,T1-batch1,"Horus, land",LAND,LAND,Horus,{},0.914,EXECUTE,165.1,True,y,none
+1786306613.57476,T1-batch1,"Ra, launch",TAKEOFF,TAKEOFF,,{},0.555,REFUSE,198.2,False,correct,none
+1786306622.013462,T1-batch1,"Ra, touch down",LAND,LAND,Ra,{},0.663,CONFIRM,208.3,False,correct,none
+1786306631.2156758,T1-batch1,thoth take off,TAKEOFF,TAKEOFF,Thoth,{},0.944,EXECUTE,207.4,True,correct,none
+1786306637.3562636,T1-batch1,"Thoth, hover for 5 seconds",HOVER,HOVER,,{'duration': 5},0.689,REFUSE,183.0,False,correct,none
+1786306643.8164268,T1-batch1,"thoth, land",LAND,LAND,Thoth,{},0.978,EXECUTE,198.4,True,correct,none
+1786306653.8257406,T1-batch1,"hey Horus, get airborne",TAKEOFF,TAKEOFF,Horus,{},0.951,EXECUTE,184.1,True,correct,none
+1786306660.6240575,T1-batch1,"Horus, climb 30",UP,UP,Horus,{'dist': 30},0.573,CONFIRM,194.5,False,correct,none
+1786306666.0236192,T1-batch1,"Horus, descend 20",DOWN,DOWN,Horus,{'dist': 20},0.813,CONFIRM,170.3,False,correct,none
+1786306670.7502265,T1-batch1,"land for me, Horus",LAND,STOP,Horus,{},0.608,CONFIRM,241.7,False,correct,
+1786306675.8548265,T1-batch1,"Ra, up you go",TAKEOFF,TAKEOFF,Ra,{},0.692,CONFIRM,150.8,False,correct,
+1786306681.9294858,T1-batch1,"Ra, land",LAND,LAND,Ra,{},0.933,EXECUTE,184.8,True,correct,none
+1786306687.914213,T1-batch1,"drone one, take off",TAKEOFF,TAKEOFF,,{},0.692,REFUSE,122.3,False,correct,none
+1786306694.7600472,T1-batch1,"drone 1, land",LAND,LAND,,{},0.543,REFUSE,165.2,False,y,none
+1786306700.021212,T1-batch1,"the second drone, take off",TAKEOFF,TAKEOFF,,{},0.646,REFUSE,218.0,False,correct,none
+1786306705.5556738,T1-batch1,"drone two, hold position for 3 seconds",HOVER,HOVER,,{'duration': 2},0.609,REFUSE,223.1,False,correct,none
+1786306710.551857,T1-batch1,"number two, land",LAND,LAND,,{},0.722,REFUSE,172.0,False,correct,none
+1786306715.4120963,T1-batch1,"everyone, take off",TAKEOFF,TAKEOFF,Horus|Ra|Thoth,{},0.928,EXECUTE,140.2,True,correct,none
+1786306720.0220468,T1-batch1,"all drones, hover for 3 seconds",HOVER,HOVER,Horus|Ra|Thoth,{'duration': 3},0.965,EXECUTE,191.9,True,correct,none
+1786306724.502054,T1-batch1,"everybody, land",LAND,LAND,Horus|Ra|Thoth,{},0.975,EXECUTE,222.7,True,correct,none
+1786306728.2574651,T1-batch1,"Horus and Thoth, take off",TAKEOFF,TAKEOFF,Horus|Thoth,{},0.978,EXECUTE,126.5,True,correct,none
+1786306734.2188811,T1-batch1,"Horus and Thoth, land",LAND,LAND,Horus|Thoth,{},0.661,CONFIRM,174.0,False,y,none
+1786306740.1165428,T1-batch1,"the whole fleet, take off",TAKEOFF,TAKEOFF,Horus|Ra|Thoth,{},0.963,EXECUTE,224.3,True,correct,none
+1786306745.3591886,T1-batch1,"everyone except Ra, land",LAND,LAND,Horus|Thoth,{},0.951,EXECUTE,155.6,True,correct,none
+1786306751.8816285,T1-batch1,"all of you, land",LAND,LAND,Horus|Ra|Thoth,{},0.946,EXECUTE,146.6,True,correct,none
+1786306759.7159913,T1-batch1,"Ra plus Thoth, get in the air",TAKEOFF,TAKEOFF,Ra|Thoth,{},0.969,EXECUTE,201.6,True,correct,none
+1786306764.822275,T1-batch1,"everyone but Thoth, land",LAND,LAND,Horus|Ra,{},0.643,CONFIRM,207.8,False,correct,none
+1786306772.404975,T1-batch1,"the fleet, land",LAND,LAND,Horus|Ra|Thoth,{},0.978,EXECUTE,211.6,True,correct,none
+1786306894.2576318,T1-batch,"Horus, take off",TAKEOFF,TAKEOFF,Horus,{},0.926,EXECUTE,195.6,True,y,
+1786306896.0399086,T1-batch,"Horus, land",LAND,LAND,Horus,{},0.914,EXECUTE,210.0,True,y,
+1786306897.5723045,T1-batch,"Ra, launch",TAKEOFF,TAKEOFF,,{},0.555,REFUSE,159.3,False,y,
+1786306898.874209,T1-batch,"Ra, touch down",LAND,LAND,Ra,{},0.663,CONFIRM,111.5,True,y,
+1786306899.6420975,T1-batch,thoth take off,TAKEOFF,TAKEOFF,Thoth,{},0.944,EXECUTE,54.4,True,y,
+1786306900.2247844,T1-batch,"Thoth, hover for 5 seconds",HOVER,HOVER,,{'duration': 5},0.689,REFUSE,124.4,False,y,
+1786306900.790442,T1-batch,"thoth, land",LAND,LAND,Thoth,{},0.978,EXECUTE,168.1,True,y,
+1786306901.3076787,T1-batch,"hey Horus, get airborne",TAKEOFF,TAKEOFF,Horus,{},0.951,EXECUTE,164.5,True,y,
+1786306902.9500773,T1-batch,"Horus, climb 30",UP,UP,Horus,{'dist': 30},0.573,CONFIRM,60.2,True,y,
+1786306904.2094965,T1-batch,"Horus, descend 20",DOWN,DOWN,Horus,{'dist': 20},0.813,CONFIRM,195.9,True,y,
+1786306905.5134592,T1-batch,"land for me, Horus",LAND,STOP,Horus,{},0.608,CONFIRM,47.6,True,y,
+1786306906.7983963,T1-batch,"Ra, up you go",TAKEOFF,TAKEOFF,Ra,{},0.692,CONFIRM,152.6,True,y,
+1786306907.4496453,T1-batch,"Ra, land",LAND,LAND,Ra,{},0.933,EXECUTE,162.5,True,y,
+1786306908.0994651,T1-batch,"drone one, take off",TAKEOFF,TAKEOFF,,{},0.692,REFUSE,67.7,False,y,
+1786306908.7534044,T1-batch,"drone 1, land",LAND,LAND,,{},0.543,REFUSE,54.8,False,y,
+1786306909.4974828,T1-batch,"the second drone, take off",TAKEOFF,TAKEOFF,,{},0.646,REFUSE,200.1,False,y,
+1786306910.1246483,T1-batch,"drone two, hold position for 3 seconds",HOVER,HOVER,,{'duration': 2},0.609,REFUSE,61.8,False,y,
+1786306910.712583,T1-batch,"number two, land",LAND,LAND,,{},0.722,REFUSE,50.7,False,y,
+1786306911.3201823,T1-batch,"everyone, take off",TAKEOFF,TAKEOFF,Horus|Ra|Thoth,{},0.928,EXECUTE,131.8,True,y,
+1786306911.8600833,T1-batch,"all drones, hover for 3 seconds",HOVER,HOVER,Horus|Ra|Thoth,{'duration': 3},0.965,EXECUTE,174.5,True,y,
+1786306912.421956,T1-batch,"everybody, land",LAND,LAND,Horus|Ra|Thoth,{},0.975,EXECUTE,61.7,True,y,
+1786306912.9628973,T1-batch,"Horus and Thoth, take off",TAKEOFF,TAKEOFF,Horus|Thoth,{},0.978,EXECUTE,82.6,True,y,
+1786306914.4672768,T1-batch,"Horus and Thoth, land",LAND,LAND,Horus|Thoth,{},0.661,CONFIRM,61.0,True,y,
+1786306915.1193724,T1-batch,"the whole fleet, take off",TAKEOFF,TAKEOFF,Horus|Ra|Thoth,{},0.963,EXECUTE,175.6,True,y,
+1786306915.707913,T1-batch,"everyone except Ra, land",LAND,LAND,Horus|Thoth,{},0.951,EXECUTE,161.0,True,y,
+1786306916.3148575,T1-batch,"all of you, land",LAND,LAND,Horus|Ra|Thoth,{},0.946,EXECUTE,56.9,True,y,
+1786306917.013004,T1-batch,"Ra plus Thoth, get in the air",TAKEOFF,TAKEOFF,Ra|Thoth,{},0.969,EXECUTE,57.3,True,y,
+1786306918.2736015,T1-batch,"everyone but Thoth, land",LAND,LAND,Horus|Ra,{},0.643,CONFIRM,44.8,True,y,
+1786306918.90272,T1-batch,"the fleet, land",LAND,LAND,Horus|Ra|Thoth,{},0.978,EXECUTE,191.7,True,y,
+1786306919.4879024,T1-batch,"Horus, move forward 50",MOVE,MOVE,,"{'dir': 'forward', 'dist': 50}",0.573,REFUSE,72.5,False,y,
+1786306920.0713992,T1-batch,"Ra, fly left half a meter",MOVE,MOVE,Ra,"{'dir': 'left', 'dist': 50}",0.965,EXECUTE,68.5,True,y,
+1786306920.7244432,T1-batch,"Thoth, turn 90 degrees clockwise",TURN,TURN,Thoth,"{'rot': 'clockwise', 'angle': 90}",0.952,EXECUTE,54.1,True,y,
+1786306921.3776617,T1-batch,"Horus, rotate 45 ccw",TURN,TURN,Horus,"{'rot': 'counterclockwise', 'angle': 45}",0.9,EXECUTE,162.8,True,y,
+1786306921.9185507,T1-batch,"Ra, go back 30 cm",MOVE,MOVE,Ra,"{'dir': 'back', 'dist': 30}",0.958,EXECUTE,58.2,True,y,
+1786306923.1531453,T1-batch,"everyone, climb 30",UP,UP,Ra|Thoth,{'dist': 30},0.574,CONFIRM,56.5,True,y,
+1786306924.370203,T1-batch,"Thoth, lower 50",DOWN,DOWN,Thoth,{'dist': 50},0.816,CONFIRM,189.3,True,y,
+1786306924.977488,T1-batch,"Horus, hover for 2 seconds",HOVER,HOVER,,{'duration': 2},0.635,REFUSE,69.1,False,y,
+1786306925.8551753,T1-batch,"Ra, stop",STOP,STOP,Ra,{},0.907,EXECUTE,63.9,True,y,
+1786306926.574712,T1-batch,take off,REFUSE,TAKEOFF,,{},0.959,REFUSE,189.4,False,y,
+1786306942.9760053,T1-batch,land now,REFUSE,LAND,,{},0.962,REFUSE,67.5,False,y,
+1786306944.394673,T1-batch,this project is really taking off,REFUSE,REFUSE,,{},0.96,REFUSE,252.0,False,y,
+1786306945.517778,T1-batch,what's the weather like today,REFUSE,REFUSE,,{},0.946,REFUSE,71.3,False,y,
+1786306946.1032083,T1-batch,"Anubis, take off",REFUSE,TAKEOFF,,{},0.981,REFUSE,198.5,False,y,
+1786306946.577524,T1-batch,"Horus, forward five meters",REFUSE,REFUSE,,{},0.931,REFUSE,24.2,False,y,
+1786306947.2057836,T1-batch,don't take off,REFUSE,REFUSE,,{},0.966,REFUSE,53.3,False,y,
+1786306947.813716,T1-batch,"Ra, do a backflip",REFUSE,REFUSE,,{},0.964,REFUSE,24.7,False,y,
+1786306948.491219,T1-batch,nobody take off,REFUSE,REFUSE,,{},0.942,REFUSE,62.0,False,y,
+1786306949.2300813,T1-batch,check the radar for weather,REFUSE,REFUSE,,{},0.957,REFUSE,128.2,False,y,
+1786306949.8394926,T1-batch,everyone up 3 meters,REFUSE,REFUSE,,{},0.951,REFUSE,131.8,False,y,
+1786306950.4244454,T1-batch,Horus take off while Ra lands,REFUSE,TAKEOFF,Horus|Ra,{},0.86,REFUSE,65.3,False,y,
+1786306951.0331824,T1-batch,"(voice) Horus, take off",TAKEOFF,TAKEOFF,Horus,{},0.903,EXECUTE,52.3,True,y,
+1786306951.5484293,T1-batch,"(voice) Horus, land",LAND,LAND,Horus,{},0.871,EXECUTE,56.8,True,y,
+1786306952.1097643,T1-batch,"(voice) everyone, take off",TAKEOFF,TAKEOFF,Horus|Ra|Thoth,{},0.858,EXECUTE,168.0,True,y,
+1786306952.6977768,T1-batch,"(voice) everyone, land",LAND,LAND,Horus|Ra|Thoth,{},0.966,EXECUTE,46.3,True,y,
+1786306954.404742,T1-batch,"(voice) Ra, hover for five seconds",HOVER,HOVER,Ra,{'duration': 5},0.763,CONFIRM,55.4,True,y,
+1786306955.0610385,T1-batch,"(voice) Thoth, move forward fifty",MOVE,MOVE,Thoth,"{'dir': 'forward', 'dist': 50}",0.625,REFUSE,206.5,False,y,
+1786306956.476647,T1-batch,"(voice) Horus, turn ninety degrees clockwise",TURN,TURN,Horus,"{'rot': 'clockwise', 'angle': 90}",0.752,CONFIRM,167.3,True,y,
+1786306958.1868508,T1-batch,"(voice) everyone except Horus, land",LAND,LAND,Ra|Thoth,{},0.821,CONFIRM,60.5,True,y,
+1786306959.0882132,T1-batch,(voice) take off,REFUSE,TAKEOFF,,{},0.825,REFUSE,222.7,False,y,
+1786306961.561931,T1-batch,"(voice) Thoth, land",LAND,LAND,Thoth,{},0.809,CONFIRM,52.6,True,y,

@@ -28,16 +28,25 @@ def main():
         expected, utt = (line.split("|", 1) + [""])[:2] if "|" in line else ("", line)
         utt = utt.strip() or line
         print(f"\n[{n}/{len(cmds)}] >>> {utt!r}   (expected: {expected or '?'})")
-        if input("  send? [Enter=yes, s=skip, q=quit] ").lower() == "s": continue
-        if _ == "q" if False else False: pass
         try: r = send(utt)
         except Exception as e:
             print("  API ERROR:", e); continue
         print(f"  [{r['band']}] {r['action']} -> {r['targets']} {r['params']} "
               f"conf={r['confidence']} {r['latency_ms']}ms")
-        v = input("  physical outcome? [y=correct / n=wrong / r=correct-refusal / q=quit] ").lower()
+        if r["band"] == "CONFIRM":
+            ok = input("  CONFIRM band — approve & dispatch? [y/n] ").lower().startswith("y")
+            if ok:
+                req2 = urllib.request.Request(API.replace("/command","/confirm"),
+                        json.dumps({"cmd_id": r["cmd_id"]}).encode(),
+                        {"Content-Type": "application/json"})
+                c = json.loads(urllib.request.urlopen(req2, timeout=15).read())
+                r["dispatched"] = c.get("dispatched", False)
+                print(f"  dispatched: {r['dispatched']}")
+        v = input("  verdict [y / n / r / s(kip) / q] ").strip().lower()[:1] or "s"
         if v == "q": break
-        note = input("  note (Enter=none): ")
+        if v == "s": continue
+        if v not in "ynr": v = {"c":"y"}.get(v, v)
+        note = ""
         w.writerow(dict(ts=time.time(), block=block, utterance=utt, expected=expected,
                         action=r["action"], targets="|".join(r["targets"]),
                         params=str(r["params"]), confidence=r["confidence"],

@@ -627,6 +627,22 @@ class DroneWorker(threading.Thread):
                 self.state.sensor_orientation = telemetry_text(values[28])
                 update_numeric("battery", 29)
 
+                # low-cadence real reads: colors + error flags (every 20th poll)
+                self._slow_poll_n = getattr(self, "_slow_poll_n", 0) + 1
+                if self._slow_poll_n % 20 == 0:
+                    try:
+                        self.state.front_color = str(self.drone.get_front_color()).upper()
+                        self.state.back_color = str(self.drone.get_back_color()).upper()
+                    except Exception:
+                        pass
+                    try:
+                        err = self.drone.get_error_data()
+                        if isinstance(err, (list, tuple)) and len(err) >= 3:
+                            se, st = int(err[1]), int(err[2])
+                            self.state.error_state = "NONE" if (se == 0 and st == 0) else f"SENS:{se} STATE:{st}"
+                    except Exception:
+                        pass
+
                 # Library 2.8 can return a protocol enum at index 30. Use it only
                 # when it is genuinely numeric; otherwise derive ground speed
                 # from consecutive local-position samples.

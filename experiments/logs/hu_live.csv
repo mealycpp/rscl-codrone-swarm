@@ -4,3 +4,108 @@ ts,cmd_id,utterance,action,targets,params,confidence,band,reason,parse_ms,dispat
 1786305838.012862,3fdea939,land,LAND,,{},0.962,REFUSE,no addressee resolved - say a name or 'everyone',126.6,False,,,typed
 1786306366.4749415,4db01435,"Horus, take off",TAKEOFF,Horus,{},0.926,EXECUTE,,1052.0,True,,,typed
 1786306402.0395079,415b206c,"Horus, land",LAND,Horus,{},0.914,EXECUTE,,229.2,True,,,typed
+1786306586.8986933,abb45c63,"Horus, take off",TAKEOFF,Horus,{},0.926,EXECUTE,,188.3,True,,,typed
+1786306599.6782792,7a2c0b70,"Horus, land",LAND,Horus,{},0.914,EXECUTE,,165.1,True,,,typed
+1786306606.979291,4e7e0aab,"Ra, launch",TAKEOFF,,{},0.555,REFUSE,no addressee resolved - say a name or 'everyone',198.2,False,,,typed
+1786306616.3497753,dcda914e,"Ra, touch down",LAND,Ra,{},0.663,CONFIRM,low confidence - confirm parse,208.3,False,,,typed
+1786306624.2472274,39b1a169,thoth take off,TAKEOFF,Thoth,{},0.944,EXECUTE,,207.4,True,,,typed
+1786306633.2885094,76f400ca,"Thoth, hover for 5 seconds",HOVER,,{'duration': 5},0.689,REFUSE,no addressee resolved - say a name or 'everyone',183.0,False,,,typed
+1786306639.516345,29620702,"thoth, land",LAND,Thoth,{},0.978,EXECUTE,,198.4,True,,,typed
+1786306645.846851,6242fc9a,"hey Horus, get airborne",TAKEOFF,Horus,{},0.951,EXECUTE,,184.1,True,,,typed
+1786306655.4395556,185d9566,"Horus, climb 30",UP,Horus,{'dist': 30},0.573,CONFIRM,low confidence - confirm parse,194.5,False,,,typed
+1786306662.029796,e81778c5,"Horus, descend 20",DOWN,Horus,{'dist': 20},0.813,CONFIRM,low confidence - confirm parse,170.3,False,,,typed
+1786306667.3955224,518120f9,"land for me, Horus",STOP,Horus,{},0.608,CONFIRM,low confidence - confirm parse,241.7,False,,,typed
+1786306672.746485,e4ec0ea8,"Ra, up you go",TAKEOFF,Ra,{},0.692,CONFIRM,low confidence - confirm parse,150.8,False,,,typed
+1786306678.1827147,7fdca3c9,"Ra, land",LAND,Ra,{},0.933,EXECUTE,,184.8,True,,,typed
+1786306683.6968887,eda44810,"drone one, take off",TAKEOFF,,{},0.692,REFUSE,no addressee resolved - say a name or 'everyone',122.3,False,,,typed
+1786306689.7492318,bddd2ea5,"drone 1, land",LAND,,{},0.543,REFUSE,no addressee resolved - say a name or 'everyone',165.2,False,,,typed
+1786306696.4163744,cfcbb5e0,"the second drone, take off",TAKEOFF,,{},0.646,REFUSE,no addressee resolved - say a name or 'everyone',218.0,False,,,typed
+1786306701.9552178,696e7710,"drone two, hold position for 3 seconds",HOVER,,{'duration': 2},0.609,REFUSE,no addressee resolved - say a name or 'everyone',223.1,False,,,typed
+1786306706.8065076,39c5d5cf,"number two, land",LAND,,{},0.722,REFUSE,no addressee resolved - say a name or 'everyone',172.0,False,,,typed
+1786306711.7331274,421854e7,"everyone, take off",TAKEOFF,Horus|Ra|Thoth,{},0.928,EXECUTE,,140.2,True,,,typed
+1786306716.9127312,4a7e64ef,"all drones, hover for 3 seconds",HOVER,Horus|Ra|Thoth,{'duration': 3},0.965,EXECUTE,,191.9,True,,,typed
+1786306721.0145469,81a22d0d,"everybody, land",LAND,Horus|Ra|Thoth,{},0.975,EXECUTE,,222.7,True,,,typed
+1786306725.7320933,ba4dbf61,"Horus and Thoth, take off",TAKEOFF,Horus|Thoth,{},0.978,EXECUTE,,126.5,True,,,typed
+1786306729.899801,aef86646,"Horus and Thoth, land",LAND,Horus|Thoth,{},0.661,CONFIRM,low confidence - confirm parse,174.0,False,,,typed
+1786306737.147225,2f9d53ea,"the whole fleet, take off",TAKEOFF,Horus|Ra|Thoth,{},0.963,EXECUTE,,224.3,True,,,typed
+1786306741.627128,200f263c,"everyone except Ra, land",LAND,Horus|Thoth,{},0.951,EXECUTE,,155.6,True,,,typed
+1786306747.6661208,cf4fccb0,"all of you, land",LAND,Horus|Ra|Thoth,{},0.946,EXECUTE,,146.6,True,,,typed
+1786306754.3143673,d161f340,"Ra plus Thoth, get in the air",TAKEOFF,Ra|Thoth,{},0.969,EXECUTE,,201.6,True,,,typed
+1786306761.2731926,2fae4377,"everyone but Thoth, land",LAND,Horus|Ra,{},0.643,CONFIRM,low confidence - confirm parse,207.8,False,,,typed
+1786306768.566427,d17b5da8,"the fleet, land",LAND,Horus|Ra|Thoth,{},0.978,EXECUTE,,211.6,True,,,typed
+1786306774.3144982,fed4b889,"Horus, move forward 50",MOVE,,"{'dir': 'forward', 'dist': 50}",0.573,REFUSE,no addressee resolved - say a name or 'everyone',199.0,False,,,typed
+1786306890.612654,472a864d,"Horus, take off",TAKEOFF,Horus,{},0.926,EXECUTE,,195.6,True,,,typed
+1786306894.469958,89fb45de,"Horus, land",LAND,Horus,{},0.914,EXECUTE,,210.0,True,,,typed
+1786306896.200712,e33fb493,"Ra, launch",TAKEOFF,,{},0.555,REFUSE,no addressee resolved - say a name or 'everyone',159.3,False,,,typed
+1786306897.6867373,744385dd,"Ra, touch down",LAND,Ra,{},0.663,CONFIRM,low confidence - confirm parse,111.5,False,,,typed
+1786306898.2500267,744385dd,(confirmed),LAND,Ra,{},,EXECUTE,,,True,yes,,
+1786306898.9301314,9d6a7417,thoth take off,TAKEOFF,Thoth,{},0.944,EXECUTE,,54.4,True,,,typed
+1786306899.7697294,5abf27ca,"Thoth, hover for 5 seconds",HOVER,,{'duration': 5},0.689,REFUSE,no addressee resolved - say a name or 'everyone',124.4,False,,,typed
+1786306900.3943894,0df738dd,"thoth, land",LAND,Thoth,{},0.978,EXECUTE,,168.1,True,,,typed
+1786306900.9581227,eabd0315,"hey Horus, get airborne",TAKEOFF,Horus,{},0.951,EXECUTE,,164.5,True,,,typed
+1786306901.371118,0c7dedae,"Horus, climb 30",UP,Horus,{'dist': 30},0.573,CONFIRM,low confidence - confirm parse,60.2,False,,,typed
+1786306901.7812765,0c7dedae,(confirmed),UP,Horus,{'dist': 30},,EXECUTE,,,True,yes,,
+1786306903.1493218,cdc33325,"Horus, descend 20",DOWN,Horus,{'dist': 20},0.813,CONFIRM,low confidence - confirm parse,195.9,False,,,typed
+1786306903.5362601,cdc33325,(confirmed),DOWN,Horus,{'dist': 20},,EXECUTE,,,True,yes,,
+1786306904.2596457,4f691eb8,"land for me, Horus",STOP,Horus,{},0.608,CONFIRM,low confidence - confirm parse,47.6,False,,,typed
+1786306904.8417356,4f691eb8,(confirmed),STOP,Horus,{},,EXECUTE,,,True,yes,,
+1786306905.6682532,d6fbdc23,"Ra, up you go",TAKEOFF,Ra,{},0.692,CONFIRM,low confidence - confirm parse,152.6,False,,,typed
+1786306906.1213393,d6fbdc23,(confirmed),TAKEOFF,Ra,{},,EXECUTE,,,True,yes,,
+1786306906.9652488,8df361a2,"Ra, land",LAND,Ra,{},0.933,EXECUTE,,162.5,True,,,typed
+1786306907.5212448,6958197b,"drone one, take off",TAKEOFF,,{},0.692,REFUSE,no addressee resolved - say a name or 'everyone',67.7,False,,,typed
+1786306908.1560917,5f088979,"drone 1, land",LAND,,{},0.543,REFUSE,no addressee resolved - say a name or 'everyone',54.8,False,,,typed
+1786306908.9570484,c746c121,"the second drone, take off",TAKEOFF,,{},0.646,REFUSE,no addressee resolved - say a name or 'everyone',200.1,False,,,typed
+1786306909.5625112,0e030164,"drone two, hold position for 3 seconds",HOVER,,{'duration': 2},0.609,REFUSE,no addressee resolved - say a name or 'everyone',61.8,False,,,typed
+1786306910.1768205,e41bb2be,"number two, land",LAND,,{},0.722,REFUSE,no addressee resolved - say a name or 'everyone',50.7,False,,,typed
+1786306910.8476012,85b5b287,"everyone, take off",TAKEOFF,Horus|Ra|Thoth,{},0.928,EXECUTE,,131.8,True,,,typed
+1786306911.4982016,d262335d,"all drones, hover for 3 seconds",HOVER,Horus|Ra|Thoth,{'duration': 3},0.965,EXECUTE,,174.5,True,,,typed
+1786306911.9250836,171c8820,"everybody, land",LAND,Horus|Ra|Thoth,{},0.975,EXECUTE,,61.7,True,,,typed
+1786306912.5079925,ff2baf4c,"Horus and Thoth, take off",TAKEOFF,Horus|Thoth,{},0.978,EXECUTE,,82.6,True,,,typed
+1786306913.0267847,6315ad47,"Horus and Thoth, land",LAND,Horus|Thoth,{},0.661,CONFIRM,low confidence - confirm parse,61.0,False,,,typed
+1786306913.9312875,6315ad47,(confirmed),LAND,Horus|Thoth,{},,EXECUTE,,,True,yes,,
+1786306914.6453824,73520cee,"the whole fleet, take off",TAKEOFF,Horus|Ra|Thoth,{},0.963,EXECUTE,,175.6,True,,,typed
+1786306915.2820308,32d3bee8,"everyone except Ra, land",LAND,Horus|Thoth,{},0.951,EXECUTE,,161.0,True,,,typed
+1786306915.7680583,e0023023,"all of you, land",LAND,Horus|Ra|Thoth,{},0.946,EXECUTE,,56.9,True,,,typed
+1786306916.375439,27695b7b,"Ra plus Thoth, get in the air",TAKEOFF,Ra|Thoth,{},0.969,EXECUTE,,57.3,True,,,typed
+1786306917.0591247,e92751cf,"everyone but Thoth, land",LAND,Horus|Ra,{},0.643,CONFIRM,low confidence - confirm parse,44.8,False,,,typed
+1786306917.623341,e92751cf,(confirmed),LAND,Horus|Ra,{},,EXECUTE,,,True,yes,,
+1786306918.4676,d0a3bf0a,"the fleet, land",LAND,Horus|Ra|Thoth,{},0.978,EXECUTE,,191.7,True,,,typed
+1786306918.978532,92656ce4,"Horus, move forward 50",MOVE,,"{'dir': 'forward', 'dist': 50}",0.573,REFUSE,no addressee resolved - say a name or 'everyone',72.5,False,,,typed
+1786306919.5595162,262c3018,"Ra, fly left half a meter",MOVE,Ra,"{'dir': 'left', 'dist': 50}",0.965,EXECUTE,,68.5,True,,,typed
+1786306920.1269069,14b05452,"Thoth, turn 90 degrees clockwise",TURN,Thoth,"{'rot': 'clockwise', 'angle': 90}",0.952,EXECUTE,,54.1,True,,,typed
+1786306920.8903039,d37f56f4,"Horus, rotate 45 ccw",TURN,Horus,"{'rot': 'counterclockwise', 'angle': 45}",0.9,EXECUTE,,162.8,True,,,typed
+1786306921.4387743,f09d85ff,"Ra, go back 30 cm",MOVE,Ra,"{'dir': 'back', 'dist': 30}",0.958,EXECUTE,,58.2,True,,,typed
+1786306921.9819965,93dae105,"everyone, climb 30",UP,Ra|Thoth,{'dist': 30},0.574,CONFIRM,low confidence - confirm parse,56.5,False,,,typed
+1786306922.4102316,93dae105,(confirmed),UP,Ra|Thoth,{'dist': 30},,EXECUTE,,,True,yes,,
+1786306923.3446586,47fa5d28,"Thoth, lower 50",DOWN,Thoth,{'dist': 50},0.816,CONFIRM,low confidence - confirm parse,189.3,False,,,typed
+1786306923.7635176,47fa5d28,(confirmed),DOWN,Thoth,{'dist': 50},,EXECUTE,,,True,yes,,
+1786306924.4423018,d5a3f8af,"Horus, hover for 2 seconds",HOVER,,{'duration': 2},0.635,REFUSE,no addressee resolved - say a name or 'everyone',69.1,False,,,typed
+1786306925.0445511,3e62155e,"Ra, stop",STOP,Ra,{},0.907,EXECUTE,,63.9,True,,,typed
+1786306926.0494194,dc6294c9,take off,TAKEOFF,,{},0.959,REFUSE,no addressee resolved - say a name or 'everyone',189.4,False,,,typed
+1786306926.6456416,955b053f,land now,LAND,,{},0.962,REFUSE,no addressee resolved - say a name or 'everyone',67.5,False,,,typed
+1786306943.230575,b6ea51cb,this project is really taking off,REFUSE,,{},0.96,REFUSE,non-command or unsafe utterance,252.0,False,,,typed
+1786306944.4688694,5981753b,what's the weather like today,REFUSE,,{},0.946,REFUSE,non-command or unsafe utterance,71.3,False,,,typed
+1786306945.718092,fbd729db,"Anubis, take off",TAKEOFF,,{},0.981,REFUSE,no addressee resolved - say a name or 'everyone',198.5,False,,,typed
+1786306946.1290717,8b6d4aeb,"Horus, forward five meters",REFUSE,,{},0.931,REFUSE,non-command or unsafe utterance,24.2,False,,,typed
+1786306946.634044,8c2af52c,don't take off,REFUSE,,{},0.966,REFUSE,non-command or unsafe utterance,53.3,False,,,typed
+1786306947.2321565,15f27658,"Ra, do a backflip",REFUSE,,{},0.964,REFUSE,non-command or unsafe utterance,24.7,False,,,typed
+1786306947.8783827,5e6c3c64,nobody take off,REFUSE,,{},0.942,REFUSE,non-command or unsafe utterance,62.0,False,,,typed
+1786306948.622537,37ae2c47,check the radar for weather,REFUSE,,{},0.957,REFUSE,non-command or unsafe utterance,128.2,False,,,typed
+1786306949.3636518,454fa5a6,everyone up 3 meters,REFUSE,,{},0.951,REFUSE,non-command or unsafe utterance,131.8,False,,,typed
+1786306949.9084241,18a0a7f4,Horus take off while Ra lands,TAKEOFF,Horus|Ra,{},0.86,REFUSE,compound commands: coming online,65.3,False,,,typed
+1786306950.478668,32786144,"(voice) Horus, take off",TAKEOFF,Horus,{},0.903,EXECUTE,,52.3,True,,,typed
+1786306951.0921264,478d241a,"(voice) Horus, land",LAND,Horus,{},0.871,EXECUTE,,56.8,True,,,typed
+1786306951.7184374,9ecf4a4f,"(voice) everyone, take off",TAKEOFF,Horus|Ra|Thoth,{},0.858,EXECUTE,,168.0,True,,,typed
+1786306952.1576407,9b2895a9,"(voice) everyone, land",LAND,Horus|Ra|Thoth,{},0.966,EXECUTE,,46.3,True,,,typed
+1786306952.7575693,d2ae548f,"(voice) Ra, hover for five seconds",HOVER,Ra,{'duration': 5},0.763,CONFIRM,low confidence - confirm parse,55.4,False,,,typed
+1786306953.2813919,d2ae548f,(confirmed),HOVER,Ra,{'duration': 5},,EXECUTE,,,True,yes,,
+1786306954.6127033,043fc076,"(voice) Thoth, move forward fifty",MOVE,Thoth,"{'dir': 'forward', 'dist': 50}",0.625,REFUSE,compound commands: coming online,206.5,False,,,typed
+1786306955.2301922,74775ce0,"(voice) Horus, turn ninety degrees clockwise",TURN,Horus,"{'rot': 'clockwise', 'angle': 90}",0.752,CONFIRM,low confidence - confirm parse,167.3,False,,,typed
+1786306955.7121327,74775ce0,(confirmed),TURN,Horus,"{'rot': 'clockwise', 'angle': 90}",,EXECUTE,,,True,yes,,
+1786306956.5399988,03464a5d,"(voice) everyone except Horus, land",LAND,Ra|Thoth,{},0.821,CONFIRM,low confidence - confirm parse,60.5,False,,,typed
+1786306957.2195165,03464a5d,(confirmed),LAND,Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786306958.413448,fec805c2,(voice) take off,TAKEOFF,,{},0.825,REFUSE,no addressee resolved - say a name or 'everyone',222.7,False,,,typed
+1786306959.1425748,55350c0d,"(voice) Thoth, land",LAND,Thoth,{},0.809,CONFIRM,low confidence - confirm parse,52.6,False,,,typed
+1786306959.925333,55350c0d,(confirmed),LAND,Thoth,{},,EXECUTE,,,True,yes,,
+1786308142.183772,293ce3f1,take off,TAKEOFF,,{},0.959,REFUSE,no addressee resolved - say a name or 'everyone',973.5,False,,,typed
+1786308155.8927205,23582faf,take off everyone,TAKEOFF,Horus|Ra|Thoth,{},0.908,EXECUTE,,172.9,True,,,typed
