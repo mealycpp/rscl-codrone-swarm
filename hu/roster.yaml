@@ -1,0 +1,4 @@
+# HU fleet roster — hardware serial -> sticky name (auto-appended by watcher)
+name_pool: [Horus, Ra, Thoth, Sobek, Anubis, Osiris, Isis, Seth, Bastet, Khonsu,
+            Ptah, Amun, Geb, Nut, Hathor, Maat, Nefertum, Khepri, Atum, Montu]
+assignments: {}   # e.g. "A1B2C3D4": Horus
