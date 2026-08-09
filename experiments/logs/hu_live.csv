@@ -1,0 +1,6 @@
+ts,cmd_id,utterance,action,targets,params,confidence,band,reason,parse_ms,dispatched,operator_confirmed
+1786300055.2447383,9008cc8c,Horus take off,TAKEOFF,Horus,{},0.917,EXECUTE,,566.1,True,
+1786305826.6518435,4f15c91b,land,LAND,,{},0.962,REFUSE,no addressee resolved - say a name or 'everyone',965.0,False,,,typed
+1786305838.012862,3fdea939,land,LAND,,{},0.962,REFUSE,no addressee resolved - say a name or 'everyone',126.6,False,,,typed
+1786306366.4749415,4db01435,"Horus, take off",TAKEOFF,Horus,{},0.926,EXECUTE,,1052.0,True,,,typed
+1786306402.0395079,415b206c,"Horus, land",LAND,Horus,{},0.914,EXECUTE,,229.2,True,,,typed

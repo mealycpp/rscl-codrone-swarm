@@ -1,0 +1,420 @@
+{
+ "get_accel_x": {
+  "ok": true,
+  "ms": 10.9,
+  "type": "int",
+  "value": "0"
+ },
+ "get_accel_y": {
+  "ok": true,
+  "ms": 10.7,
+  "type": "int",
+  "value": "0"
+ },
+ "get_accel_z": {
+  "ok": true,
+  "ms": 10.8,
+  "type": "int",
+  "value": "98"
+ },
+ "get_accident_count": {
+  "ok": true,
+  "ms": 51.0,
+  "type": "int",
+  "value": "1"
+ },
+ "get_ack_data": {
+  "ok": true,
+  "ms": 101.0,
+  "type": "list",
+  "value": "[1.3130459785461426, 1017394, <DataType.Request: 4>, 1163]"
+ },
+ "get_address_data": {
+  "ok": true,
+  "ms": 102.6,
+  "type": "list",
+  "value": "[1.5108487606048584, 'XgBdAA1RNDQwNjUzARAIAA==', 'MgB3AAJRMzI2NzY0AyAEAA==']"
+ },
+ "get_altitude_data": {
+  "ok": true,
+  "ms": 11.1,
+  "type": "list",
+  "value": "[1.5172839164733887, 42.2981071472168, 97041.9140625, 474.037109375, 0.0]"
+ },
+ "get_angle_x": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_angle_y": {
+  "ok": true,
+  "ms": 10.5,
+  "type": "int",
+  "value": "0"
+ },
+ "get_angle_z": {
+  "ok": true,
+  "ms": 10.7,
+  "type": "int",
+  "value": "-38"
+ },
+ "get_angular_speed_x": {
+  "ok": true,
+  "ms": 11.2,
+  "type": "int",
+  "value": "0"
+ },
+ "get_angular_speed_y": {
+  "ok": true,
+  "ms": 10.8,
+  "type": "int",
+  "value": "0"
+ },
+ "get_angular_speed_z": {
+  "ok": true,
+  "ms": 10.8,
+  "type": "int",
+  "value": "0"
+ },
+ "get_back_color": {
+  "ok": true,
+  "ms": 11.5,
+  "type": "str",
+  "value": "'yellow'"
+ },
+ "get_battery": {
+  "ok": true,
+  "ms": 10.6,
+  "type": "int",
+  "value": "100"
+ },
+ "get_bottom_range": {
+  "ok": true,
+  "ms": 11.2,
+  "type": "float",
+  "value": "0.0"
+ },
+ "get_button_data": {
+  "ok": true,
+  "ms": 0.0,
+  "type": "list",
+  "value": "[0, 0, 0]"
+ },
+ "get_color_data": {
+  "ok": true,
+  "ms": 11.5,
+  "type": "list",
+  "value": "[1.6278407573699951, 73, 17, 87, 79, 41, 30, 74, 62, <ColorCard.Yellow: 'yellow'>, <ColorCard.Yellow: 'yellow'>, <Card.Y..."
+ },
+ "get_colors": {
+  "ok": true,
+  "ms": 10.8,
+  "type": "list",
+  "value": "['yellow', 'yellow']"
+ },
+ "get_control_speed": {
+  "ok": true,
+  "ms": 33.1,
+  "type": "int",
+  "value": "2"
+ },
+ "get_count_data": {
+  "ok": true,
+  "ms": 50.6,
+  "type": "list",
+  "value": "[1.6825227737426758, 1397, 33, 31, 1]"
+ },
+ "get_cpu_id_data": {
+  "ok": true,
+  "ms": 102.4,
+  "type": "list",
+  "value": "[1.8297843933105469, 'AAAAAAAAAAAAAAAA', 'MgB3AAJRMzI2NzY0']"
+ },
+ "get_drone_temperature": {
+  "ok": true,
+  "ms": 11.4,
+  "type": "float",
+  "value": "42.3"
+ },
+ "get_elevation": {
+  "ok": true,
+  "ms": 11.6,
+  "type": "float",
+  "value": "474.03"
+ },
+ "get_error_data": {
+  "ok": true,
+  "ms": 201.1,
+  "type": "list",
+  "value": "[1.8598580360412598, 0, 0]"
+ },
+ "get_flight_state": {
+  "ok": true,
+  "ms": 11.7,
+  "type": "ModeFlight",
+  "value": "<ModeFlight.Ready: 16>"
+ },
+ "get_flight_time": {
+  "ok": true,
+  "ms": 50.7,
+  "type": "int",
+  "value": "1397"
+ },
+ "get_flow_data": {
+  "ok": true,
+  "ms": 11.1,
+  "type": "list",
+  "value": "[2.1221840381622314, 14.0, -507.0]"
+ },
+ "get_flow_velocity_x": {
+  "ok": true,
+  "ms": 10.9,
+  "type": "float",
+  "value": "1400.0"
+ },
+ "get_flow_velocity_y": {
+  "ok": true,
+  "ms": 10.7,
+  "type": "float",
+  "value": "-50700.0"
+ },
+ "get_flow_x": {
+  "ok": true,
+  "ms": 11.2,
+  "type": "float",
+  "value": "1400.0"
+ },
+ "get_flow_y": {
+  "ok": true,
+  "ms": 11.1,
+  "type": "float",
+  "value": "-50700.0"
+ },
+ "get_front_color": {
+  "ok": true,
+  "ms": 11.2,
+  "type": "str",
+  "value": "'yellow'"
+ },
+ "get_front_range": {
+  "ok": true,
+  "ms": 11.2,
+  "type": "float",
+  "value": "17.8"
+ },
+ "get_height": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "float",
+  "value": "0.0"
+ },
+ "get_image_data": {
+  "ok": false,
+  "error": "TypeError: Drone.get_image_data() missing 1 required positional argument: 'image_file_name'"
+ },
+ "get_information_data": {
+  "ok": true,
+  "ms": 101.6,
+  "type": "list",
+  "value": "[2.257521867752075, <ModelNumber.Drone_8_Drone_P1: 528385>, '25.2.1 ', <ModelNumber.Drone_4_Controller_P3: 270339>, '25...."
+ },
+ "get_joystick_data": {
+  "ok": true,
+  "ms": 11.8,
+  "type": "list",
+  "value": "[2.292304754257202, 0, 0, 'CN', 'Stay', 0, 0, 'CN', 'Stay']"
+ },
+ "get_landing_count": {
+  "ok": true,
+  "ms": 51.8,
+  "type": "int",
+  "value": "31"
+ },
+ "get_left_joystick_x": {
+  "ok": true,
+  "ms": 0.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_left_joystick_y": {
+  "ok": true,
+  "ms": 0.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_lostconnection_data": {
+  "ok": true,
+  "ms": 54.1,
+  "type": "list",
+  "value": "[0, 0]"
+ },
+ "get_motion_data": {
+  "ok": true,
+  "ms": 11.8,
+  "type": "list",
+  "value": "[2.43416690826416, 0, 0, 98, 0, 0, 0, 0, 0, -38]"
+ },
+ "get_move_values": {
+  "ok": true,
+  "ms": 0.0,
+  "type": "list",
+  "value": "[0, 0, 0, 0]"
+ },
+ "get_movement_state": {
+  "ok": true,
+  "ms": 10.9,
+  "type": "ModeMovement",
+  "value": "<ModeMovement.Ready: 1>"
+ },
+ "get_pos_x": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "float",
+  "value": "0.0"
+ },
+ "get_pos_y": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "float",
+  "value": "0.003"
+ },
+ "get_pos_z": {
+  "ok": true,
+  "ms": 10.8,
+  "type": "float",
+  "value": "-0.03"
+ },
+ "get_position_data": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "list",
+  "value": "[2.489550828933716, -4.4277971937844995e-06, 3.16297409881372e-05, -0.00029655013349838555]"
+ },
+ "get_pressure": {
+  "ok": true,
+  "ms": 10.7,
+  "type": "float",
+  "value": "97042.45"
+ },
+ "get_range_data": {
+  "ok": true,
+  "ms": 11.7,
+  "type": "list",
+  "value": "[2.510944128036499, 182, 0]"
+ },
+ "get_raw_motion_data": {
+  "ok": true,
+  "ms": 10.8,
+  "type": "list",
+  "value": "[2.522160053253174, -73, -5, 1781, 29, 36, -4]"
+ },
+ "get_right_joystick_x": {
+  "ok": true,
+  "ms": 0.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_right_joystick_y": {
+  "ok": true,
+  "ms": 0.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_sensor_data": {
+  "ok": true,
+  "ms": 55.5,
+  "type": "list",
+  "value": "[2.533134698867798, 42.31010437011719, 97042.453125, 473.990234375, 0.0, 2.54433012008667, 0, 0, 98, 0, 0, 0, 0, 0, -38,..."
+ },
+ "get_state_data": {
+  "ok": true,
+  "ms": 10.9,
+  "type": "list",
+  "value": "[2.587822198867798, <ModeSystem.Running: 18>, <ModeFlight.Ready: 16>, <ModeControlFlight.Position: 17>, <Headless.Normal..."
+ },
+ "get_system_state": {
+  "ok": true,
+  "ms": 10.9,
+  "type": "ModeSystem",
+  "value": "<ModeSystem.Running: 18>"
+ },
+ "get_takeoff_count": {
+  "ok": true,
+  "ms": 51.7,
+  "type": "int",
+  "value": "33"
+ },
+ "get_temperature": {
+  "ok": true,
+  "ms": 11.4,
+  "type": "float",
+  "value": "42.3"
+ },
+ "get_trim": {
+  "ok": true,
+  "ms": 87.0,
+  "type": "list",
+  "value": "[0, 0]"
+ },
+ "get_trim_data": {
+  "ok": true,
+  "ms": 82.3,
+  "type": "list",
+  "value": "[2.7623772621154785, 0, 0, 0, 0]"
+ },
+ "get_x_accel": {
+  "ok": true,
+  "ms": 12.6,
+  "type": "int",
+  "value": "0"
+ },
+ "get_x_angle": {
+  "ok": true,
+  "ms": 10.9,
+  "type": "int",
+  "value": "0"
+ },
+ "get_x_gyro": {
+  "ok": true,
+  "ms": 11.6,
+  "type": "int",
+  "value": "0"
+ },
+ "get_y_accel": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_y_angle": {
+  "ok": true,
+  "ms": 11.0,
+  "type": "int",
+  "value": "0"
+ },
+ "get_y_gyro": {
+  "ok": true,
+  "ms": 10.5,
+  "type": "int",
+  "value": "0"
+ },
+ "get_z_accel": {
+  "ok": true,
+  "ms": 10.6,
+  "type": "int",
+  "value": "97"
+ },
+ "get_z_angle": {
+  "ok": true,
+  "ms": 10.6,
+  "type": "int",
+  "value": "-38"
+ },
+ "get_z_gyro": {
+  "ok": true,
+  "ms": 10.6,
+  "type": "int",
+  "value": "0"
+ }
+}

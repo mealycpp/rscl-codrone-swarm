@@ -7,7 +7,12 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Callable
 
+import codrone_edu.drone as _codrone_edu_drone
 from codrone_edu.drone import Drone
+
+# codrone-edu prints "No sensor errors." / "No state errors." from inside the
+# library on every diagnostic poll; shadow print in that module to silence it.
+_codrone_edu_drone.print = lambda *args, **kwargs: None
 
 from .telemetry import TelemetrySnapshot, empty_snapshot, parse_sensor_bundle
 
@@ -68,8 +73,12 @@ class DroneAgent:
         self._thread.start()
 
     def stop(self) -> None:
+        # Land/close FIRST, then stop the loop: setting _stop before the
+        # disconnect is processed lets the thread exit with the drone still
+        # paired (and airborne). item.done is set by _run after _disconnect.
+        item = self.enqueue("disconnect", priority=0)
+        item.done.wait(timeout=5.0)
         self._stop.set()
-        self.enqueue("disconnect", priority=0)
         self._thread.join(timeout=3.0)
 
     def enqueue(self, name: str, *args: Any, priority: int = 10) -> WorkItem:

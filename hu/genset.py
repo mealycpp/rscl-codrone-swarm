@@ -4,9 +4,11 @@ import argparse, json, random, string
 
 NAME_POOL = ["Horus","Ra","Thoth","Sobek","Anubis","Osiris","Isis","Seth",
              "Bastet","Khonsu","Ptah","Amun","Geb","Nut","Hathor","Maat",
-             "Nefertum","Khepri","Atum","Montu",
-             "Tefnut","Shu","Serqet","Wadjet","Neith"]
-HELD_OUT_NAMES = set(NAME_POOL[20:])
+             "Nefertum","Khepri","Atum","Montu","Sekhmet","Nephthys","Anhur",
+             "Aten","Bes","Hapi","Khnum","Menhit","Min","Mut","Nekhbet","Nun",
+             "Pakhet","Renenutet","Satet","Seshat","Sopdu","Taweret","Wepwawet","Heka",
+             "Tefnut","Shu","Serqet","Wadjet","Neith","Kek","Heh","Apis"]
+HELD_OUT_NAMES = set(NAME_POOL[40:])
 
 DIST_BINS = [20,30,50,75,100,150]
 ANGLE_BINS = [15,45,90,135,180]
@@ -108,7 +110,7 @@ def sample_action_phrase(rng, action):
 def frame(rng, surf, vp, register, vocative):
     p, nw = rng.choice(POLITE), rng.choice(NOW)
     if register == "telegraphic":
-        core = vp.split(" for ")[0]
+        core = vp.replace(" for ", " ").replace(" seconds", "s")
         return rng.choice([f"{surf.lower()} {core}", f"{core} {surf.lower()}",
                            f"{surf.lower()}: {core}", f"{core} — {surf.lower()}"])
     if vocative == "pre":
@@ -162,7 +164,7 @@ def gen_negative(rng, roster):
     utt = rng.choice(pick).format(name=n1, name2=n2)
     if sub == "unaddressed":
         act = {"take off":"TAKEOFF","land":"LAND","hover":"HOVER","move":"MOVE",
-               "go up":"UP","up you":"UP","turn":"TURN","stop":"STOP"}
+               "up you":"TAKEOFF","go up":"UP","turn":"TURN","stop":"STOP"}
         action = next((a for k,a in act.items() if k in utt), "LAND")
         return utt, action, {}, {"type":"EMPTY"}, sub
     return utt, "REFUSE", {"reason": sub}, {"type":"EMPTY"}, sub
@@ -224,7 +226,7 @@ def main():
 
     def roster(rng):
         k = rng.choice([3,3,3,4,5,6])
-        pool = NAME_POOL[:20] if rng.random() < 0.85 else NAME_POOL
+        pool = NAME_POOL[:40] if rng.random() < 0.85 else NAME_POOL
         return rng.sample(pool, k)
 
     for _ in range(n_pos):
@@ -244,12 +246,17 @@ def main():
         if c: c["tier"] = "T5"; rows.append(c); made += 1
 
     rng.shuffle(rows)
-    fams = sorted({r["family"] for r in rows})
+    # hold out ONLY positive frame families; never neg/compound (structural classes)
+    fams = sorted({r["family"] for r in rows
+                   if r["family"].startswith("fam_pre") or r["family"].startswith("fam_post")
+                   or r["family"].startswith("fam_mid") or r["family"].startswith("fam_tel")})
     test_fams = set(rng.sample(fams, max(1, len(fams)//6)))
     with open(args.out, "w") as f:
         for i, r in enumerate(rows):
             r["uid"] = f"hu{i:05d}"
-            r["family_split"] = "test" if r["family"] in test_fams else "train"
+            r["family_split"] = ("test" if r["family"] in test_fams else "train") \
+                if not r["compound"] and not r["family"].startswith("fam_neg") \
+                else ("test" if rng.random() < 0.15 else "train")
             names_in = set(r["roster"]) | set(r["target_expr"].get("names", []) or [])
             r["name_split"] = "test" if names_in & HELD_OUT_NAMES else "train"
             f.write(json.dumps(r) + "\n")

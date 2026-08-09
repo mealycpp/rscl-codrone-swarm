@@ -1,0 +1,66 @@
+# T1 — proper names (12)
+TAKEOFF|Horus, take off
+LAND|Horus, land
+TAKEOFF|Ra, launch
+LAND|Ra, touch down
+TAKEOFF|thoth take off
+HOVER|Thoth, hover for 5 seconds
+LAND|thoth, land
+TAKEOFF|hey Horus, get airborne
+UP|Horus, climb 30
+DOWN|Horus, descend 20
+LAND|land for me, Horus
+TAKEOFF|Ra, up you go
+# T2 — indices (6)
+LAND|Ra, land
+TAKEOFF|drone one, take off
+LAND|drone 1, land
+TAKEOFF|the second drone, take off
+HOVER|drone two, hold position for 3 seconds
+LAND|number two, land
+# T3 — sets, ALL, exclusion (12)
+TAKEOFF|everyone, take off
+HOVER|all drones, hover for 3 seconds
+LAND|everybody, land
+TAKEOFF|Horus and Thoth, take off
+LAND|Horus and Thoth, land
+TAKEOFF|the whole fleet, take off
+LAND|everyone except Ra, land
+LAND|all of you, land
+TAKEOFF|Ra plus Thoth, get in the air
+LAND|everyone but Thoth, land
+LAND|the fleet, land
+MOVE|Horus, move forward 50
+# motion params (8)
+MOVE|Ra, fly left half a meter
+TURN|Thoth, turn 90 degrees clockwise
+TURN|Horus, rotate 45 ccw
+MOVE|Ra, go back 30 cm
+UP|everyone, climb 30
+DOWN|Thoth, lower 50
+HOVER|Horus, hover for 2 seconds
+STOP|Ra, stop
+# refusals — each should REFUSE or empty-target (12)
+REFUSE|take off
+REFUSE|land now
+REFUSE|this project is really taking off
+REFUSE|what's the weather like today
+REFUSE|Anubis, take off
+REFUSE|Horus, forward five meters
+REFUSE|don't take off
+REFUSE|Ra, do a backflip
+REFUSE|nobody take off
+REFUSE|check the radar for weather
+REFUSE|everyone up 3 meters
+REFUSE|Horus take off while Ra lands
+# voice block — SPEAK these via the mic (10)
+TAKEOFF|(voice) Horus, take off
+LAND|(voice) Horus, land
+TAKEOFF|(voice) everyone, take off
+LAND|(voice) everyone, land
+HOVER|(voice) Ra, hover for five seconds
+MOVE|(voice) Thoth, move forward fifty
+TURN|(voice) Horus, turn ninety degrees clockwise
+LAND|(voice) everyone except Horus, land
+REFUSE|(voice) take off
+LAND|(voice) Thoth, land

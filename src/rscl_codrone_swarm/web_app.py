@@ -417,6 +417,15 @@ class DroneWorker(threading.Thread):
             self.state.movement_state = command.upper()
             fn(degrees)
             self.state.movement_state = "IDLE"
+        elif command in {"up", "down"}:
+            distance = clamp(float(kwargs.get("distance_cm", 30)), 10.0, 100.0)
+            sign = 1.0 if command == "up" else -1.0
+            self.state.movement_state = command.upper()
+            try:
+                d.move_distance(0, 0, sign * distance / 100.0, 0.5)
+            except (AttributeError, TypeError):
+                d.go("up" if sign > 0 else "down", 50, max(0.5, distance / 50.0))
+            self.state.movement_state = "IDLE"
         elif command == "set_led":
             red = int(clamp(float(kwargs.get("red", 40)), 0, 255))
             green = int(clamp(float(kwargs.get("green", 215)), 0, 255))
@@ -484,6 +493,9 @@ class DroneWorker(threading.Thread):
             self.state.flight_state = "STANDBY" if self.state.present else "DETACHED"
 
     def _execute_simulated(self, command: str, kwargs: dict[str, Any]) -> None:
+        if command in {"up", "down"}:
+            time.sleep(0.3)
+            return
         if command == "takeoff":
             self.state.flight_state = "AIRBORNE"
             self.state.bottom_height_m = 0.75
@@ -1222,7 +1234,7 @@ class FleetController:
     def _validate_custom_step(self, step: dict[str, Any]) -> dict[str, Any]:
         action = str(step.get("action", "")).lower()
         allowed = {
-            "takeoff", "hover", "land", "forward", "backward", "left", "right",
+            "takeoff", "hover", "land", "forward", "backward", "left", "right", "up", "down",
             "turn_left", "turn_right", "set_led", "set_led_mode", "led_off",
             "wait", "color_wave", "fleet_led_map", "indexed_motion",
         }
@@ -1407,6 +1419,8 @@ def create_app(simulate: bool) -> FastAPI:
             "right",
             "turn_left",
             "turn_right",
+            "up",
+            "down",
             "set_led",
             "set_led_mode",
             "led_off",
@@ -1422,6 +1436,9 @@ def create_app(simulate: bool) -> FastAPI:
         except RuntimeError as exc:
             raise HTTPException(409, str(exc))
         return JSONResponse({"ok": True, "target": target, "command": cmd})
+
+    from hu.gateway.hu_router import make_hu_router
+    app.include_router(make_hu_router(controller_holder))
 
     @app.post("/api/lighting/apply")
     async def apply_lighting(request: Request) -> JSONResponse:
