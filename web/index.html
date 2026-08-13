@@ -120,6 +120,7 @@ btn.outerHTML=r.dispatched?'<span style="color:#7cd992;font-weight:bold">dispatc
             <button class="preset-card violet" data-preset="box"><strong>ORBIT BOX</strong><span>Closed four-segment route with chroma states</span></button>
             <button class="preset-card magenta" data-preset="split_merge"><strong>SPLIT / MERGE</strong><span>Role-indexed divergence, translation, and convergence</span></button>
             <button class="preset-card cyan" data-preset="wavefront"><strong>WAVEFRONT</strong><span>Time-phased forward and reverse propagation</span></button>
+            <button class="preset-card cyan" data-preset="column_form"><strong>COLUMN FORM</strong><span>Role-indexed line-to-column formation, march, and return</span></button>
             <button class="preset-card green" data-preset="pinwheel"><strong>PINWHEEL</strong><span>Counter-rotating yaw groups and radial translation</span></button>
             <button class="preset-card amber" data-preset="helix"><strong>DUAL HELIX</strong><span>Alternating yaw directions with expanding segments</span></button>
             <button class="preset-card violet" data-preset="braid"><strong>CHROMA BRAID</strong><span>Role-alternating lanes, crossings, and color channels</span></button>
@@ -247,7 +248,7 @@ function huMic(){
   const mic=document.getElementById('hu-mic');mic.style.background='#7c2222';
   huRec.onresult=e=>{document.getElementById('hu-in').value=e.results[0][0].transcript;window.huSource='voice';huSend();window.huSource='typed';};
   huRec.onend=()=>{mic.style.background='#16241c';huRec=null;};
-  huRec.onerror=()=>{mic.style.background='#16241c';huRec=null;};
+  huRec.onerror=e=>{mic.style.background='#16241c';huRec=null;document.getElementById('hu-out').innerHTML='<i style="color:#e5a373">mic error: '+e.error+'</i>';};
   huRec.start();}
 </script>
 
@@ -257,6 +258,49 @@ async function huSimPoll(){try{const st=await(await fetch('/api/status')).json()
 document.getElementById('hu-simbadge').style.display=st.simulate?'block':'none';
 }catch(e){}}
 huSimPoll();setInterval(huSimPoll,3000);
+</script>
+<script>
+(function(){
+  let lastPreset = null;
+  document.addEventListener("click", e => {
+    const c = e.target.closest("[data-preset]");
+    if (c) { lastPreset = c.getAttribute("data-preset");
+             const st = document.getElementById("missionState");
+             if (st) st.textContent = "READY: " + lastPreset.toUpperCase(); }
+  }, true);
+  const host = document.querySelector(".mission-params") || document.querySelector(".mission-lab");
+  if (!host) return;
+  const bar = document.createElement("div");
+  bar.style.cssText = "margin-top:10px;display:flex;gap:10px;align-items:center";
+  bar.innerHTML = '<button id="huMissionRun" style="padding:8px 18px;background:#7cd992;color:#08130c;border:0;font-weight:bold;cursor:pointer">&#9654; RUN MISSION</button>'
+    + '<button id="huMissionAbort" style="padding:8px 14px;background:#7c2222;color:#ffd9d9;border:0;font-weight:bold;cursor:pointer">&#9632; ABORT</button>'
+    + '<span id="huMissionMsg" style="font-family:monospace;font-size:12px;color:#9ad"></span>';
+  host.appendChild(bar);
+  const msg = t => document.getElementById("huMissionMsg").textContent = t;
+  document.getElementById("huMissionRun").onclick = async () => {
+    if (!lastPreset) { msg("pick a preset card first"); return; }
+    const params = {
+      repeats: parseInt(document.getElementById("missionRepeats")?.value || "2"),
+      distance: parseInt(document.getElementById("missionDistance")?.value || "30"),
+      distance_cm: parseInt(document.getElementById("missionDistance")?.value || "30")
+    };
+    const body = { target: document.getElementById("missionTarget")?.value || "ALL",
+                   preset: lastPreset, params };
+    try {
+      const r = await fetch("/api/mission/run", { method: "POST",
+        headers: {"Content-Type": "application/json"}, body: JSON.stringify(body) });
+      const j = await r.json();
+      if (r.ok) { msg("running: " + j.mission);
+        const st = document.getElementById("missionState"); if (st) st.textContent = "RUNNING"; }
+      else msg("error: " + (j.detail || r.status));
+    } catch (err) { msg("error: " + err); }
+  };
+  document.getElementById("huMissionAbort").onclick = async () => {
+    await fetch("/api/mission/abort", { method: "POST" });
+    msg("aborted");
+    const st = document.getElementById("missionState"); if (st) st.textContent = "READY";
+  };
+})();
 </script>
 </body>
 </html>

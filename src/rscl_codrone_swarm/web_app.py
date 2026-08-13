@@ -494,6 +494,10 @@ class DroneWorker(threading.Thread):
 
     def _execute_simulated(self, command: str, kwargs: dict[str, Any]) -> None:
         if command in {"up", "down"}:
+            dz = float(kwargs.get("distance_cm", 30)) / 100.0
+            if command == "down": dz = -dz
+            self.state.z_m = max(0.1, self.state.z_m + dz)
+            self.state.bottom_height_m = self.state.z_m
             time.sleep(0.3)
             return
         if command == "takeoff":
@@ -512,17 +516,23 @@ class DroneWorker(threading.Thread):
             self.state.flight_state = "MOTORS STOPPED"
             self.state.bottom_height_m = 0.0
             self.state.z_m = 0.0
-        elif command == "forward":
-            self.state.x_m += float(kwargs.get("distance_cm", 30)) / 100.0
-        elif command == "backward":
-            self.state.x_m -= float(kwargs.get("distance_cm", 30)) / 100.0
-        elif command == "left":
-            self.state.y_m += float(kwargs.get("distance_cm", 30)) / 100.0
-        elif command == "right":
-            self.state.y_m -= float(kwargs.get("distance_cm", 30)) / 100.0
+        elif command in {"forward", "backward", "left", "right"}:
+            d = float(kwargs.get("distance_cm", 30)) / 100.0
+            bx, by = {"forward": (d, 0.0), "backward": (-d, 0.0),
+                      "left": (0.0, d), "right": (0.0, -d)}[command]
+            th = math.radians(self.state.yaw)
+            wx = bx * math.cos(th) + by * math.sin(th)
+            wy = -bx * math.sin(th) + by * math.cos(th)
+            steps = 10
+            for _ in range(steps):
+                self.state.x_m += wx / steps
+                self.state.y_m += wy / steps
+                time.sleep(0.12)
         elif command == "turn_left":
+            time.sleep(0.35)
             self.state.yaw = (self.state.yaw - float(kwargs.get("degrees", 45))) % 360
         elif command == "turn_right":
+            time.sleep(0.35)
             self.state.yaw = (self.state.yaw + float(kwargs.get("degrees", 45))) % 360
         elif command == "set_led":
             red = int(kwargs.get("red", 40))
@@ -978,7 +988,7 @@ class FleetController:
                     {"action": "left", "params": {"distance_cm": distance, "speed": speed}, "label": "Weave left"},
                     {"action": "forward", "params": {"distance_cm": distance, "speed": speed}, "label": "Weave advance"},
                     led_map(iteration * 2 + 1, "Weave chroma B"),
-                    {"action": "right", "params": {"distance_cm": min(90, distance * 2), "speed": speed}, "label": "Weave cross"},
+                    {"action": "right", "params": {"distance_cm": min(60, distance * 2), "speed": speed}, "label": "Weave cross"},
                     {"action": "forward", "params": {"distance_cm": distance, "speed": speed}, "label": "Weave advance"},
                     {"action": "left", "params": {"distance_cm": distance, "speed": speed}, "label": "Weave recenter"},
                 ])
@@ -1077,7 +1087,7 @@ class FleetController:
                     led_map(iteration, "Braid channel colors"),
                     indexed_motion(first, "Braid divergence"),
                     {"action": "forward", "params": {"distance_cm": distance, "speed": speed}, "label": "Braid phase advance A"},
-                    indexed_motion(cross, "Braid crossover"),
+                    indexed_motion(cross, "Braid crossover (staggered)", phase_ms),
                     {"action": "forward", "params": {"distance_cm": distance, "speed": speed}, "label": "Braid phase advance B"},
                     indexed_motion(restore, "Braid lane restoration"),
                 ])
@@ -1146,6 +1156,23 @@ class FleetController:
                     led_map(iteration * 2 + 1, "Figure-eight lobe B colors"),
                     {"action": "turn_left", "params": {"degrees": half_turn}, "label": "Heading recovery"},
                     {"action": "backward", "params": {"distance_cm": distance, "speed": speed}, "label": "Figure-eight return"},
+                ])
+        elif preset == "column_form":
+            spacing = int(clamp(distance, 20, 60))
+            into = [{"action": "forward", "params": {"distance_cm": max(10, member * spacing), "speed": speed}}
+                    if member > 0 else {"action": "hover", "params": {"duration": 0.4}}
+                    for member in range(count)]
+            outof = [{"action": "backward", "params": {"distance_cm": max(10, member * spacing), "speed": speed}}
+                     if member > 0 else {"action": "hover", "params": {"duration": 0.4}}
+                     for member in range(count)]
+            for iteration in range(repetitions):
+                steps.extend([
+                    led_map(iteration, "Column role colors"),
+                    indexed_motion(into, "Form column (role-indexed advance)", max(phase_ms, 300)),
+                    {"action": "hover", "params": {"duration": 1.0}, "label": "Column hold"},
+                    {"action": "forward", "params": {"distance_cm": distance, "speed": speed}, "label": "Column march"},
+                    {"action": "backward", "params": {"distance_cm": distance, "speed": speed}, "label": "Column return"},
+                    indexed_motion(outof, "Reform line (role-indexed return)", max(phase_ms, 300)),
                 ])
         else:
             raise ValueError(f"unknown preset: {preset}")
