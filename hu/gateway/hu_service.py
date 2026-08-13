@@ -25,24 +25,48 @@ WORDNUM = {"two":2,"three":3,"five":5,"ten":10,"fifteen":15,"twenty":20,
 
 def extract_params(action, utt):
     u = utt.lower(); out = {}
+    u = _re.sub(r"\b(drone|number)\s+(one|two|three|four|five|six|\d)\b", "\\1", u)
+    u = _re.sub(r"\bthe (first|second|third|fourth|fifth|sixth) drone\b", "drone", u)
     for w, v in sorted(WORDNUM.items(), key=lambda x: -len(x[0])):
         u = u.replace(w, str(v))
+    u = _re.sub(r"(\d+(?:\.\d+)?)\s*(?:meters?|metres?|m)\b",
+                lambda mo: str(int(float(mo.group(1)) * 100)), u)
+    u = _re.sub(r"(\d+(?:\.\d+)?)\s*(?:feet|foot|ft)\b",
+                lambda mo: str(int(float(mo.group(1)) * 30.48)), u)
+    u = _re.sub(r"(\d+(?:\.\d+)?)\s*(?:inches|inch)\b",
+                lambda mo: str(int(float(mo.group(1)) * 2.54)), u)
+    u = _re.sub(r"(\d+(?:\.\d+)?)\s*(?:minutes?|min)\b",
+                lambda mo: str(int(float(mo.group(1)) * 60)), u)
+    u = _re.sub(r"(\d+(?:\.\d+)?)\s*(?:meters?|metres?|m)\b",
+                lambda mo: str(int(float(mo.group(1)) * 100)), u)
     nums = [int(x) for x in _re.findall(r"\d+", u)]
     def snap(n, bins): return min(bins, key=lambda b: abs(b-n))
+    def gate(n, lo, hi, unit):
+        if n < lo or n > hi:
+            out["range_violation"] = f"{n} {unit} outside safe {lo}-{hi} {unit}"
+            return None
+        return n
+    def gate(n, lo, hi, unit):
+        if n < lo or n > hi:
+            out["range_violation"] = f"{n} {unit} outside safe {lo}-{hi} {unit}"
+            return None
+        return n
     if action == "MOVE":
         for d, ws in {"forward":["forward","ahead","straight"],"back":["back","reverse"],
                       "left":["left"],"right":["right"]}.items():
             if any(w in u for w in ws): out["dir"] = d; break
-        out["dist"] = snap(nums[0], [20,30,50,75,100,150]) if nums else 50
+        out["dist"] = (snap(g, [20,30,50,75,100,150]) if (g := gate(nums[0], 10, 200, "cm")) else None) if nums else 50
     elif action == "TURN":
         out["rot"] = "counterclockwise" if any(w in u for w in ["ccw","counter","anticlock"]) else "clockwise"
-        out["angle"] = snap(nums[0], [15,45,90,135,180]) if nums else 90
+        out["angle"] = (snap(g, [15,45,90,135,180]) if (g := gate(nums[0], 5, 360, "deg")) else None) if nums else 90
     elif action == "HOVER":
-        out["duration"] = snap(nums[0], [2,3,5,10]) if nums else 3
+        out["duration"] = (snap(g, [2,3,5,10]) if (g := gate(nums[0], 1, 15, "s")) else None) if nums else 3
     elif action in ("UP","DOWN"):
-        out["dist"] = snap(nums[0], [20,30,50,75,100,150]) if nums else 30
+        out["dist"] = (snap(g, [20,30,50,75,100,150]) if (g := gate(nums[0], 10, 200, "cm")) else None) if nums else 30
     return out
 
+IDXWORDS = {0:"drone one, first", 1:"drone two, second", 2:"drone three, third",
+            3:"drone four, fourth", 4:"drone five, fifth", 5:"drone six, sixth"}
 class Head(nn.Module):
     def __init__(self, d, k, hid=384):
         super().__init__()
@@ -86,7 +110,7 @@ class HU:
     def parse(self, utterance: str):
         t0 = time.monotonic_ns()
         names = self.roster()
-        texts = [utterance] + [f"drone: {n} | index: {k} | mentioned: {_mentions(n, utterance)} | utterance: {utterance}"
+        texts = [utterance] + [f"drone: {n} | index: {k} ({IDXWORDS.get(k,k)}) | mentioned: {_mentions(n, utterance)} | utterance: {utterance}"
                                for k, n in enumerate(names)]
         E = self._emb(texts)
         a_prob = torch.softmax(self.heads["action"](E[0:1]), -1)[0]

@@ -1,0 +1,22 @@
+# MAKEUP-1 — morning false-refusals, verbatim, vs v1.1
+TAKEOFF|Ra, launch
+HOVER|Thoth, hover for 5 seconds
+MOVE|Horus, move forward 50
+TAKEOFF|hey Horus, get airborne
+LAND|land for me, Horus
+MOVE|Ra, fly left half a meter
+HOVER|Horus, hover for 2 seconds
+STOP|Ra, stop
+TAKEOFF|Ra, up you go
+MOVE|Ra, go back 30 cm
+# T2 indices — live trial of the query fix
+TAKEOFF|drone one, take off
+LAND|drone 1, land
+TAKEOFF|the second drone, take off
+HOVER|drone two, hold position for 3 seconds
+LAND|number two, land
+TAKEOFF|drone three, take off
+LAND|drone three, land
+# EMERGENCY channel — fleet-wide, symbolic, model bypassed
+STOP|khalas
+LAND|land

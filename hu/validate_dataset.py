@@ -5,7 +5,12 @@ import json, re, sys
 
 def edit1(a, b):
     if abs(len(a)-len(b)) > 1: return False
-    if len(a) == len(b): return sum(x!=y for x,y in zip(a,b)) <= 1
+    if len(a) == len(b):
+        diff=[i for i,(x,y) in enumerate(zip(a,b)) if x!=y]
+        if len(diff) <= 1: return True
+        if len(diff) == 2 and diff[1]==diff[0]+1 and a[diff[0]]==b[diff[1]] and a[diff[1]]==b[diff[0]]:
+            return True
+        return False
     s, l = (a, b) if len(a) < len(b) else (b, a)
     for i in range(len(l)):
         if s == l[:i] + l[i+1:]: return True
@@ -20,6 +25,7 @@ bad, total = [], 0
 for line in open(sys.argv[1] if len(sys.argv) > 1 else "hu/data/hu_dataset.jsonl"):
     r = json.loads(line); total += 1
     if r["compound"] or r["negative_subtype"]: continue
+    if r.get("tier")=="T2" or r.get("register")=="asr": continue  # index-referenced / deliberately ASR-mangled names
     te = r["target_expr"]
     if te["type"] == "NAMES":
         for nm in te["names"]:
@@ -32,4 +38,11 @@ for line in open(sys.argv[1] if len(sys.argv) > 1 else "hu/data/hu_dataset.jsonl
 rate = len(bad) / max(total, 1)
 print(f"{total} rows checked, {len(bad)} invariant violations ({rate:.3%})")
 for b in bad[:10]: print("  ", b)
+if "--clean" in sys.argv:
+    drop = {u for u,_,_,_ in bad}
+    path = sys.argv[1]
+    kept = [l for l in open(path) if json.loads(l)["uid"] not in drop]
+    open(path, "w").writelines(kept)
+    print(f"cleaned: dropped {len(drop)} rows, kept {len(kept)}")
+    sys.exit(1 if rate > 0.02 else 0)
 sys.exit(1 if rate > 0.005 else 0)

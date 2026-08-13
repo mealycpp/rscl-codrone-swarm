@@ -109,3 +109,270 @@ ts,cmd_id,utterance,action,targets,params,confidence,band,reason,parse_ms,dispat
 1786306959.925333,55350c0d,(confirmed),LAND,Thoth,{},,EXECUTE,,,True,yes,,
 1786308142.183772,293ce3f1,take off,TAKEOFF,,{},0.959,REFUSE,no addressee resolved - say a name or 'everyone',973.5,False,,,typed
 1786308155.8927205,23582faf,take off everyone,TAKEOFF,Horus|Ra|Thoth,{},0.908,EXECUTE,,172.9,True,,,typed
+1786313053.4402924,2e2678ca,"Ra, launch",TAKEOFF,Ra,{},0.923,EXECUTE,,764.5,True,,,typed
+1786313057.741002,35879d94,"Thoth, hover for 5 seconds",HOVER,Thoth,{'duration': 5},0.51,REFUSE,confidence too low,160.8,False,,,typed
+1786313058.8238533,89882bf4,"Horus, move forward 50",MOVE,Horus,"{'dir': 'forward', 'dist': 50}",0.941,EXECUTE,,140.1,True,,,typed
+1786313059.4924715,94ef8e93,"hey Horus, get airborne",TAKEOFF,Horus,{},0.955,EXECUTE,,180.9,True,,,typed
+1786313059.8128476,9c4edca9,"land for me, Horus",LAND,Horus|Thoth,{},0.758,CONFIRM,low confidence - confirm parse,52.2,False,,,typed
+1786313060.2105622,9c4edca9,(confirmed),LAND,Horus|Thoth,{},,EXECUTE,,,True,yes,,
+1786313061.1604478,8d465975,"Ra, fly left half a meter",MOVE,Ra,"{'dir': 'left', 'dist': 50}",0.944,EXECUTE,,50.7,True,,,typed
+1786313061.867564,455f2a10,"Horus, hover for 2 seconds",HOVER,Horus,{'duration': 2},0.623,CONFIRM,low confidence - confirm parse,150.2,False,,,typed
+1786313062.4853415,455f2a10,(confirmed),HOVER,Horus,{'duration': 2},,EXECUTE,,,True,yes,,
+1786313063.2259,a23d5263,"Ra, stop",STOP,Ra,{},0.743,CONFIRM,low confidence - confirm parse,196.7,False,,,typed
+1786313063.585596,a23d5263,(confirmed),STOP,Ra,{},,EXECUTE,,,True,yes,,
+1786313064.3510652,633ceb08,"Ra, up you go",TAKEOFF,Ra,{},0.876,EXECUTE,,177.9,True,,,typed
+1786313064.9657972,149b68bd,"Ra, go back 30 cm",MOVE,Ra,"{'dir': 'back', 'dist': 30}",0.955,EXECUTE,,51.6,True,,,typed
+1786313065.7641566,bb483184,"drone one, take off",TAKEOFF,Horus,{},0.621,CONFIRM,low confidence - confirm parse,61.2,False,,,typed
+1786313066.2393289,bb483184,(confirmed),TAKEOFF,Horus,{},,EXECUTE,,,True,yes,,
+1786313067.0941732,5bff3c26,"drone 1, land",LAND,Horus|Ra|Thoth,{},0.535,REFUSE,confidence too low,201.6,False,,,typed
+1786313067.7140527,90785a87,"the second drone, take off",TAKEOFF,,{},0.544,REFUSE,no addressee resolved - say a name or 'everyone',139.7,False,,,typed
+1786313068.2472663,1d590e0a,"drone two, hold position for 3 seconds",HOVER,,{'duration': 2},0.523,REFUSE,no addressee resolved - say a name or 'everyone',47.4,False,,,typed
+1786313068.8114944,56f4ca98,"number two, land",LAND,Ra|Thoth,{},0.522,REFUSE,confidence too low,50.6,False,,,typed
+1786313069.3732004,dc6e8b82,"drone three, take off",TAKEOFF,Thoth,{},0.742,CONFIRM,low confidence - confirm parse,48.9,False,,,typed
+1786313070.0217566,dc6e8b82,(confirmed),TAKEOFF,Thoth,{},,EXECUTE,,,True,yes,,
+1786313071.078246,63f73672,"drone three, land",LAND,Thoth,{},0.524,REFUSE,confidence too low,202.7,False,,,typed
+1786313071.7444198,a9bdf723,khalas,LAND,Horus|Ra|Thoth,{},1.0,EMERGENCY,emergency override -> fleet-wide,0,True,,,
+1786313072.4854734,4a78228b,land,LAND,Horus|Ra|Thoth,{},1.0,EMERGENCY,emergency override -> fleet-wide,0,True,,,
+1786313372.413165,cee0811c,"Horus, take off",TAKEOFF,Horus,{},0.929,EXECUTE,,200.4,True,,,typed
+1786313392.852714,0f5c2f66,"Horus, take off",TAKEOFF,Horus,{},0.929,EXECUTE,,149.5,True,,,typed
+1786313401.699237,07b426bb,"Horus, land",LAND,Horus,{},0.834,CONFIRM,low confidence - confirm parse,116.5,False,,,typed
+1786313408.8215902,07b426bb,(confirmed),LAND,Horus,{},,EXECUTE,,,True,yes,,
+1786313422.0558956,cfae0770,"Everyone, take off",TAKEOFF,Horus|Ra|Thoth,{},0.968,EXECUTE,,193.3,True,,,typed
+1786313436.7551908,02a7e042,"Everyone, land",LAND,Horus|Ra|Thoth,{},0.985,EXECUTE,,125.2,True,,,typed
+1786313485.8077452,55237106,"Ra, hover for five seconds",REFUSE,Ra,{},0.628,REFUSE,non-command or unsafe utterance,156.5,False,,,typed
+1786313504.77721,87289583,"Thoth, move forward fifty",MOVE,Thoth,"{'dir': 'forward', 'dist': 50}",0.818,CONFIRM,low confidence - confirm parse,128.6,False,,,typed
+1786313507.19405,87289583,(confirmed),MOVE,Thoth,"{'dir': 'forward', 'dist': 50}",,EXECUTE,,,True,yes,,
+1786313741.8212066,fcb27edc,hello,LAND,,{},0.326,REFUSE,no addressee resolved - say a name or 'everyone',182.6,False,,,voice
+1786313752.4766703,3b36665a,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,235.0,False,,,voice
+1786313754.3873768,3b36665a,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786313771.581583,c144cd63,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,251.7,True,,,voice
+1786313929.285199,4493f38b,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',205.4,False,,,voice
+1786313939.28849,b994b578,no take off,TAKEOFF,,{},0.82,REFUSE,no addressee resolved - say a name or 'everyone',245.0,False,,,voice
+1786313947.6828194,6b45b362,Rock take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',185.0,False,,,voice
+1786313952.521235,738997dd,prop take off,TAKEOFF,,{},0.952,REFUSE,no addressee resolved - say a name or 'everyone',210.7,False,,,voice
+1786314024.384809,f51cee4b,raw take off,TAKEOFF,Ra,{},0.764,CONFIRM,low confidence - confirm parse,186.6,False,,,voice
+1786314027.4772458,f51cee4b,(confirmed),TAKEOFF,Ra,{},,EXECUTE,,,True,yes,,
+1786314036.5381708,a04fca54,Roland,TAKEOFF,,{},0.524,REFUSE,no addressee resolved - say a name or 'everyone',193.7,False,,,voice
+1786314041.2640638,6bdea2e4,raw land,LAND,Ra|Thoth,{},0.515,REFUSE,confidence too low,225.8,False,,,voice
+1786314048.6221855,6d521950,raw land,LAND,Ra|Thoth,{},0.515,REFUSE,confidence too low,109.0,False,,,voice
+1786314056.0546744,84d61f08,raw land,LAND,Ra|Thoth,{},0.515,REFUSE,confidence too low,195.5,False,,,voice
+1786314063.2008107,dbd99da0,"Ra, land",LAND,Ra,{},0.757,CONFIRM,low confidence - confirm parse,106.0,False,,,typed
+1786314067.1399624,dbd99da0,(confirmed),LAND,Ra,{},,EXECUTE,,,True,yes,,
+1786314293.0097861,c11e79f3,raw take off,TAKEOFF,Ra,{},0.764,CONFIRM,low confidence - confirm parse,200.2,False,,,typed
+1786314294.2414677,c11e79f3,(confirmed),TAKEOFF,Ra,{},,EXECUTE,,,True,yes,,
+1786314354.8742805,2555c657,"Raw, take off",TAKEOFF,Ra,{},0.861,EXECUTE,,154.9,True,,,typed
+1786314367.711207,58a39bff,"raa, land",LAND,Ra,{},0.917,EXECUTE,,105.0,True,,,typed
+1786314527.5047011,3b5bd5ae,Ra takeover,REFUSE,Ra,{},0.75,REFUSE,non-command or unsafe utterance,811.9,False,,,voice
+1786314542.5588825,5314ade8,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',208.1,False,,,voice
+1786314561.8058445,a0adf234,no take off,TAKEOFF,,{},0.82,REFUSE,no addressee resolved - say a name or 'everyone',252.6,False,,,voice
+1786314571.8590786,99617994,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',221.6,False,,,voice
+1786314576.3190777,f35afed3,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',241.1,False,,,voice
+1786314584.1191735,91f8f112,"ra, take off",TAKEOFF,Ra,{},0.938,EXECUTE,,156.5,True,,,typed
+1786314595.3909295,34fa950b,"ra, land",LAND,Ra|Thoth,{},0.678,CONFIRM,low confidence - confirm parse,128.1,False,,,typed
+1786314598.4740782,34fa950b,(confirmed),LAND,Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786314640.6514711,9a498c12,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',215.0,False,,,voice
+1786314646.0371354,eb31fbc6,Ra take off,TAKEOFF,Ra,{},0.913,EXECUTE,,205.3,True,,,voice
+1786314660.4065883,78fbb911,"take off, everyone",TAKEOFF,Horus|Ra|Thoth,{},0.894,EXECUTE,,121.4,True,,,typed
+1786314733.2701616,9578f561,"Horus, take off",TAKEOFF,Horus,{},0.929,EXECUTE,,733.9,True,,,typed
+1786314774.213969,3c6b6e6a,turn off take off,TAKEOFF,,{},0.371,REFUSE,no addressee resolved - say a name or 'everyone',239.0,False,,,voice
+1786314781.0635128,95f20ef9,Ra take off,TAKEOFF,Ra,{},0.913,EXECUTE,,243.1,True,,,voice
+1786314790.057962,a6b755de,horror stick of,REFUSE,,{},0.594,REFUSE,non-command or unsafe utterance,223.1,False,,,voice
+1786314797.3224487,5f25dfca,taurus take off,TAKEOFF,,{},0.911,REFUSE,no addressee resolved - say a name or 'everyone',212.8,False,,,voice
+1786314816.7281122,e61831a5,"ra, takeoff",TAKEOFF,Ra,{},0.939,EXECUTE,,125.5,True,,,typed
+1786314826.8699477,452d0cc3,"ra, land",LAND,Ra|Thoth,{},0.678,CONFIRM,low confidence - confirm parse,165.1,False,,,typed
+1786314831.0794184,452d0cc3,(confirmed),LAND,Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786314839.6532526,2a77a6d4,"horus, takeoff",TAKEOFF,Horus,{},0.942,EXECUTE,,145.5,True,,,typed
+1786314847.6691554,93c52c3f,"thoth, takeoff",TAKEOFF,Thoth,{},0.876,EXECUTE,,119.6,True,,,typed
+1786314862.6564233,3a0de157,"land, both",LAND,Horus|Ra|Thoth,{},0.962,EXECUTE,,128.0,True,,,typed
+1786314904.8859732,ee5070a6,"horus, take off",TAKEOFF,Horus,{},0.929,EXECUTE,,149.2,True,,,typed
+1786314923.8456573,00bc594f,"horus, turn ninety degrees clockwise",TURN,Horus,"{'rot': 'clockwise', 'angle': 90}",0.975,EXECUTE,,149.8,True,,,typed
+1786314933.4465597,c6c9bf27,"yalla, horus",TAKEOFF,Horus,{},0.513,REFUSE,confidence too low,164.5,False,,,typed
+1786314952.3457727,7bfed6f0,"hours, go up 2 cm",UP,,{'dist': 20},0.837,REFUSE,no addressee resolved - say a name or 'everyone',218.2,False,,,typed
+1786315048.3712728,d1021e67,erotica,STOP,,{},0.43,REFUSE,no addressee resolved - say a name or 'everyone',230.1,False,,,voice
+1786315056.080647,bddef59d,erotica,STOP,,{},0.43,REFUSE,no addressee resolved - say a name or 'everyone',205.1,False,,,voice
+1786315061.7779412,6f40124e,Rod take off,TAKEOFF,,{},0.973,REFUSE,no addressee resolved - say a name or 'everyone',171.1,False,,,voice
+1786315069.0781765,9e9af4b9,Rob takeoff,TAKEOFF,,{},0.938,REFUSE,no addressee resolved - say a name or 'everyone',231.5,False,,,voice
+1786315076.1677978,dba08f2c,horse take off,TAKEOFF,,{},0.912,REFUSE,no addressee resolved - say a name or 'everyone',205.9,False,,,voice
+1786315087.4459002,7328f0a0,toss take off,TAKEOFF,,{},0.882,REFUSE,no addressee resolved - say a name or 'everyone',200.6,False,,,voice
+1786315103.1926732,6eae6315,"horus,takeoff",TAKEOFF,Horus,{},0.951,EXECUTE,,174.4,True,,,typed
+1786315124.6982486,72756bb1,horus go forward 10 cm,MOVE,Horus,"{'dir': 'forward', 'dist': 20}",0.951,EXECUTE,,143.5,True,,,typed
+1786315139.327754,b55a1334,horus go 1 m,MOVE,Horus,{'dist': 20},0.894,EXECUTE,,177.6,True,,,typed
+1786315152.3310812,429c0d32,horus land,LAND,Horus,{},0.814,CONFIRM,low confidence - confirm parse,179.4,False,,,typed
+1786315169.7896137,c69c015b,"horus, land",LAND,Horus,{},0.809,CONFIRM,low confidence - confirm parse,148.2,False,,,typed
+1786315177.9241564,c69c015b,(confirmed),LAND,Horus,{},,EXECUTE,,,True,yes,,
+1786315186.5116725,291b429e,yalla everyone,STOP,Horus|Ra|Thoth,{},0.603,CONFIRM,low confidence - confirm parse,248.0,False,,,voice
+1786315189.1825476,291b429e,(confirmed),STOP,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786315253.0705018,fed051c6,yellow everyone,STOP,Horus|Thoth,{},0.473,REFUSE,confidence too low,235.4,False,,,voice
+1786315259.9461648,7e453737,yella everyone,STOP,Horus|Ra|Thoth,{},0.425,REFUSE,confidence too low,203.8,False,,,voice
+1786315266.2834377,4c248e03,Horus takeoff,TAKEOFF,Horus,{},0.874,EXECUTE,,226.3,True,,,voice
+1786315275.105855,bd71d0e9,Horus go forward,TAKEOFF,Horus,{},0.681,CONFIRM,low confidence - confirm parse,182.2,False,,,voice
+1786315277.9742053,bd71d0e9,(confirmed),TAKEOFF,Horus,{},,EXECUTE,,,True,yes,,
+1786315287.6058283,ca667a6c,horoscope forward 2 m,MOVE,,"{'dir': 'forward', 'dist': 20}",0.797,REFUSE,no addressee resolved - say a name or 'everyone',210.1,False,,,voice
+1786315301.9290676,709d7cd5,Horseland,LAND,Horus|Thoth,{},0.619,CONFIRM,low confidence - confirm parse,216.5,False,,,voice
+1786315304.4284337,709d7cd5,(confirmed),LAND,Horus|Thoth,{},,EXECUTE,,,True,yes,,
+1786315457.2873306,f26da67d,yalla everyone,STOP,Horus|Ra|Thoth,{},0.603,CONFIRM,low confidence - confirm parse,1061.3,False,,,voice
+1786315460.2042365,f26da67d,(confirmed),STOP,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786315603.0247033,b1391fa8,Lala everyone,REFUSE,Horus|Thoth,{},0.562,REFUSE,non-command or unsafe utterance,162.0,False,,,voice
+1786315608.2911766,7a702030,yellow everyone,STOP,Horus|Thoth,{},0.473,REFUSE,confidence too low,190.0,False,,,voice
+1786315613.9950945,67fbdaf5,yella everyone,STOP,Horus|Ra|Thoth,{},0.425,REFUSE,confidence too low,242.8,False,,,voice
+1786315619.1422577,69be6ac4,Forest take off,TAKEOFF,,{},0.927,REFUSE,no addressee resolved - say a name or 'everyone',212.7,False,,,voice
+1786315733.1777492,416fd243,yella everyone,STOP,Horus|Ra|Thoth,{},0.425,REFUSE,confidence too low,154.1,False,,,voice
+1786315750.4474115,aa7a179e,yella everyone,STOP,Horus|Ra|Thoth,{},0.425,REFUSE,confidence too low,214.7,False,,,voice
+1786315758.1191454,823b4cfd,yellow yellow everyone,STOP,Horus|Thoth,{},0.212,REFUSE,confidence too low,215.3,False,,,voice
+1786315771.881883,a07577d8,you're not everyone,REFUSE,Horus|Ra|Thoth,{},0.701,REFUSE,non-command or unsafe utterance,162.8,False,,,voice
+1786315910.631244,e419e0d6,yella everyone,STOP,Horus|Ra|Thoth,{},0.425,REFUSE,confidence too low,1067.3,False,,,voice
+1786315921.1944869,6c4ab456,Horus go up,TAKEOFF,Horus,{},0.908,EXECUTE,,265.3,True,,,voice
+1786315930.9908652,89630b7a,Horus land,LAND,Horus,{},0.852,EXECUTE,,234.0,True,,,voice
+1786316102.7660234,f5a0db8f,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',1067.3,False,,,voice
+1786316110.3001132,c44858b8,Horus take off,TAKEOFF,Horus,{},0.913,EXECUTE,,196.1,True,,,voice
+1786316122.375259,801d581a,Horus Mann,REFUSE,Horus,{},0.284,REFUSE,non-command or unsafe utterance,209.3,False,,,voice
+1786316129.687469,aecb9e33,Forest land,LAND,Thoth,{},0.526,REFUSE,confidence too low,166.6,False,,,voice
+1786316135.7257955,ce83f29e,Horus land,LAND,Horus,{},0.852,EXECUTE,,213.8,True,,,voice
+1786316144.8275838,ec2fa747,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,198.4,False,,,voice
+1786316147.7896602,ec2fa747,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786316158.361338,97a03b5a,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,226.8,True,,,voice
+1786316170.877215,db4083a6,stop timer for 5 seconds,HOVER,Horus|Ra|Thoth,{'duration': 5},0.566,CONFIRM,low confidence - confirm parse,200.9,False,,,voice
+1786316173.5148075,db4083a6,(confirmed),HOVER,Horus|Ra|Thoth,{'duration': 5},,EXECUTE,,,True,yes,,
+1786316184.4634678,f4507fb0,pause,STOP,,{},0.711,REFUSE,no addressee resolved - say a name or 'everyone',231.6,False,,,voice
+1786316188.6836052,60dfc170,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',163.0,False,,,voice
+1786316195.8192964,8bb06516,sauce take off,TAKEOFF,,{},0.988,REFUSE,no addressee resolved - say a name or 'everyone',159.5,False,,,voice
+1786316203.8126159,09a02a49,Ra take off,TAKEOFF,Ra,{},0.913,EXECUTE,,187.9,True,,,voice
+1786316213.302246,d853355c,Ra cover for 5 seconds,HOVER,Ra,{'duration': 5},0.613,CONFIRM,low confidence - confirm parse,219.6,False,,,voice
+1786316216.9428818,d853355c,(confirmed),HOVER,Ra,{'duration': 5},,EXECUTE,,,True,yes,,
+1786316231.8158865,808e1e28,Rockland,LAND,,{},0.636,REFUSE,no addressee resolved - say a name or 'everyone',173.6,False,,,voice
+1786316237.2033882,6e79db73,Laughlin,TAKEOFF,,{},0.243,REFUSE,no addressee resolved - say a name or 'everyone',184.9,False,,,voice
+1786316242.7940164,0d5e2c0a,Laughlin,TAKEOFF,,{},0.243,REFUSE,no addressee resolved - say a name or 'everyone',147.1,False,,,voice
+1786316249.3701055,19d21692,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,229.3,True,,,voice
+1786316267.2796903,35114068,Ra cover for 5 seconds,HOVER,Ra,{'duration': 5},0.613,CONFIRM,low confidence - confirm parse,237.6,False,,,voice
+1786316269.871454,35114068,(confirmed),HOVER,Ra,{'duration': 5},,EXECUTE,,,True,yes,,
+1786316292.6172388,b7beee98,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,202.8,False,,,voice
+1786316296.0907102,b7beee98,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786316307.4583797,ec367348,everyone except Forest land,LAND,Horus|Ra|Thoth,{},0.93,EXECUTE,,218.8,True,,,voice
+1786316334.2925825,cc81128d,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,205.1,False,,,voice
+1786316337.7690144,cc81128d,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786316345.2522569,f8352902,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,212.3,True,,,voice
+1786316368.9627774,c6c0a004,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,210.7,False,,,voice
+1786316380.116135,39950802,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,261.4,True,,,voice
+1786316389.1486697,c1f1d2be,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,270.9,False,,,voice
+1786316391.5909045,c1f1d2be,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786316400.5490646,9c3b0dee,everyone except Horus land,LAND,Ra|Thoth,{},0.854,EXECUTE,,206.3,True,,,voice
+1786316408.8091533,47488b80,Taurus,REFUSE,,{},0.832,REFUSE,non-command or unsafe utterance,169.6,False,,,voice
+1786316414.782014,a19f6abb,Taurus move forward 10 m,MOVE,,"{'dir': 'forward', 'dist': 20}",0.682,REFUSE,no addressee resolved - say a name or 'everyone',151.3,False,,,voice
+1786316423.200662,c7a70afa,everyone move forward 10 m,MOVE,Horus|Ra|Thoth,"{'dir': 'forward', 'dist': 20}",0.852,EXECUTE,,210.4,True,,,voice
+1786316432.7289026,338cfabd,Horus land,LAND,Horus,{},0.852,EXECUTE,,163.5,True,,,voice
+1786316766.7459962,8b82d71d,a horse,REFUSE,,{},0.243,REFUSE,non-command or unsafe utterance,816.3,False,,,voice
+1786316771.1368942,4b8ad15e,Horus takeoff,TAKEOFF,Horus,{},0.874,EXECUTE,,241.5,True,,,voice
+1786316780.4073875,b5a043f2,Horus take off,TAKEOFF,Horus,{},0.913,EXECUTE,,257.6,True,,,voice
+1786316788.3301513,ca88dcaa,Forest move forward 1 m,MOVE,,"{'dir': 'forward', 'dist': 100}",0.773,REFUSE,no addressee resolved - say a name or 'everyone',215.3,False,,,voice
+1786316803.739647,d8f7ef42,horus move forward 1m,MOVE,Horus,"{'dir': 'forward', 'dist': 100}",0.882,EXECUTE,,133.6,True,,,typed
+1786316813.263833,2cc3151a,Horseland,LAND,Horus|Thoth,{},0.619,CONFIRM,low confidence - confirm parse,219.9,False,,,voice
+1786316815.1194723,2cc3151a,(confirmed),LAND,Horus|Thoth,{},,EXECUTE,,,True,yes,,
+1786316834.285913,ea1b2043,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,233.9,False,,,voice
+1786316837.0492594,ea1b2043,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786316849.208274,8d9ad65b,everyone move forward 1 end,MOVE,Horus|Ra|Thoth,"{'dir': 'forward', 'dist': None}",0.738,REFUSE,unsafe parameter: 1 cm outside safe 10-200 cm,252.9,False,,,voice
+1786316855.5510387,54f0b044,everyone move forward 1 m,MOVE,Horus|Ra|Thoth,"{'dir': 'forward', 'dist': 100}",0.87,EXECUTE,,221.0,True,,,voice
+1786316862.337139,76add639,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,266.9,True,,,voice
+1786316901.6535947,160d7c1f,Horus take off,TAKEOFF,Horus,{},0.913,EXECUTE,,226.7,True,,,voice
+1786316912.1846766,cd1c52a2,Forest move forward to centimeters,MOVE,,"{'dir': 'forward', 'dist': 50}",0.303,REFUSE,no addressee resolved - say a name or 'everyone',212.3,False,,,voice
+1786316924.9128187,a1eb03c5,horus move forward 2cm,MOVE,Horus,"{'dir': 'forward', 'dist': None}",0.895,REFUSE,unsafe parameter: 2 cm outside safe 10-200 cm,193.3,False,,,typed
+1786316939.053397,6d6cd462,Horus move forward to meters,TAKEOFF,Horus,{},0.412,REFUSE,confidence too low,201.4,False,,,voice
+1786316948.0645223,caaaec4e,Horus move forward to meters,TAKEOFF,Horus,{},0.412,REFUSE,confidence too low,210.1,False,,,voice
+1786316967.512443,f3ce624c,horus move forward 0.2 m,MOVE,Horus,"{'dir': 'forward', 'dist': 20}",0.959,EXECUTE,,180.4,True,,,typed
+1786316977.256788,f8d16065,hardest land,LAND,,{},0.627,REFUSE,no addressee resolved - say a name or 'everyone',221.8,False,,,voice
+1786316986.1033382,48ebf0b2,Horus Mann,REFUSE,Horus,{},0.284,REFUSE,non-command or unsafe utterance,213.6,False,,,voice
+1786317128.8856742,1ac05235,Horus takeoff,TAKEOFF,Horus,{},0.874,EXECUTE,,809.2,True,,,voice
+1786317141.4150856,88af0d5e,Horus move forward 2 inches,MOVE,Horus,"{'dir': 'forward', 'dist': None}",0.839,REFUSE,unsafe parameter: 5 cm outside safe 10-200 cm,158.2,False,,,voice
+1786317158.13734,ab3021fb,"horus, move forward 2 inches",MOVE,Horus,"{'dir': 'forward', 'dist': None}",0.905,REFUSE,unsafe parameter: 5 cm outside safe 10-200 cm,135.4,False,,,typed
+1786317165.113959,53094b8e,Horseland,LAND,Horus|Thoth,{},0.619,CONFIRM,low confidence - confirm parse,228.8,False,,,voice
+1786317167.8312647,53094b8e,(confirmed),LAND,Horus|Thoth,{},,EXECUTE,,,True,yes,,
+1786317178.6318066,30749808,Horus take off,TAKEOFF,Horus,{},0.913,EXECUTE,,236.1,True,,,voice
+1786317186.7905009,aaa22199,Forest go up 1 m,UP,,{'dist': 100},0.913,REFUSE,no addressee resolved - say a name or 'everyone',195.6,False,,,voice
+1786317195.6517332,2b729111,Horus go up 1M,UP,Horus,{'dist': 100},0.882,EXECUTE,,178.5,True,,,voice
+1786317203.3424683,f23d48c4,Forest land,LAND,Thoth,{},0.526,REFUSE,confidence too low,211.6,False,,,voice
+1786317209.1675355,ab9adc84,Horus land,LAND,Horus,{},0.852,EXECUTE,,171.9,True,,,voice
+1786319435.5662286,a9711e8e,"Horus, move forward 1 meter",MOVE,Horus,"{'dir': 'forward', 'dist': 100}",0.967,EXECUTE,,652.9,True,,,typed
+1786319780.6468863,1a21ccc8,"everyone, take off",TAKEOFF,Horus|Ra|Thoth,{},0.88,EXECUTE,,683.3,True,,,typed
+1786319796.4044664,24b90533,"everyone, go up 1 meter",UP,Horus|Ra|Thoth,{'dist': 100},0.891,EXECUTE,,141.4,True,,,typed
+1786319805.5924797,e58cf57e,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,134.7,True,,,typed
+1786319864.8634844,43d52db1,"everyone, takeoff",TAKEOFF,Horus|Ra|Thoth,{},0.816,CONFIRM,low confidence - confirm parse,170.0,False,,,typed
+1786319867.403362,43d52db1,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786320032.0759435,550e7043,Forest take off,TAKEOFF,,{},0.927,REFUSE,no addressee resolved - say a name or 'everyone',139.6,False,,,voice
+1786320053.0066414,18874c06,Horus take off,TAKEOFF,Horus,{},0.913,EXECUTE,,146.2,True,,,voice
+1786320059.3120944,1aee4158,Ra take off,TAKEOFF,Ra,{},0.913,EXECUTE,,140.0,True,,,voice
+1786320065.702614,90f46816,sauce take off,TAKEOFF,,{},0.988,REFUSE,no addressee resolved - say a name or 'everyone',141.4,False,,,voice
+1786320070.5837946,1736d0a2,sauce take off,TAKEOFF,,{},0.988,REFUSE,no addressee resolved - say a name or 'everyone',184.3,False,,,voice
+1786320083.412148,ecec53a5,Horus land,LAND,Horus,{},0.852,EXECUTE,,137.1,True,,,voice
+1786320088.8320544,e24e2c23,Rockland,LAND,,{},0.636,REFUSE,no addressee resolved - say a name or 'everyone',140.0,False,,,voice
+1786320092.836157,2d1ed6b5,Laughlin,TAKEOFF,,{},0.243,REFUSE,no addressee resolved - say a name or 'everyone',106.9,False,,,voice
+1786320099.573911,1be2627e,ra land,LAND,Ra,{},0.738,CONFIRM,low confidence - confirm parse,147.7,False,,,typed
+1786320101.984156,1be2627e,(confirmed),LAND,Ra,{},,EXECUTE,,,True,yes,,
+1786320108.7924488,285c2b43,sauce take off,TAKEOFF,,{},0.988,REFUSE,no addressee resolved - say a name or 'everyone',180.8,False,,,voice
+1786320113.8281167,78c94e7e,toss take off,TAKEOFF,,{},0.882,REFUSE,no addressee resolved - say a name or 'everyone',126.0,False,,,voice
+1786320121.838277,7557344d,thoth takeoff,TAKEOFF,Thoth,{},0.952,EXECUTE,,131.2,True,,,typed
+1786320129.9354398,ef0ceea4,take off,TAKEOFF,,{},0.955,REFUSE,no addressee resolved - say a name or 'everyone',128.9,False,,,voice
+1786320133.8696666,88d3805e,wrote take off,TAKEOFF,,{},0.841,REFUSE,no addressee resolved - say a name or 'everyone',153.7,False,,,voice
+1786320137.2004654,78fa37f0,Morris takeoff,TAKEOFF,,{},0.765,REFUSE,no addressee resolved - say a name or 'everyone',146.5,False,,,voice
+1786320145.3727229,c17516e5,horus and ra takeoff,TAKEOFF,Horus,{},0.791,CONFIRM,low confidence - confirm parse,131.6,False,,,typed
+1786320147.9182558,c17516e5,(confirmed),TAKEOFF,Horus,{},,EXECUTE,,,True,yes,,
+1786320156.3865533,9f775053,ra takeoff,TAKEOFF,Ra,{},0.902,EXECUTE,,146.5,True,,,typed
+1786320172.2864332,88c89a64,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,130.4,True,,,voice
+1786320180.487348,8b14d2b6,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,144.3,False,,,voice
+1786320188.6115563,8b14d2b6,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786320196.6910267,6b1f21d5,everyone move up,TAKEOFF,Horus|Ra|Thoth,{},0.41,REFUSE,confidence too low,133.7,False,,,voice
+1786320201.850558,4fb01617,everyone go up 5 cm,UP,Horus|Ra|Thoth,{'dist': None},0.946,REFUSE,unsafe parameter: 5 cm outside safe 10-200 cm,134.7,False,,,voice
+1786320207.3285623,368ec7a3,everyone go up,TAKEOFF,Horus|Ra|Thoth,{},0.81,CONFIRM,low confidence - confirm parse,177.2,False,,,voice
+1786320210.8884017,368ec7a3,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786320219.9157114,35a16748,1 m,UP,,{'dist': 100},0.409,REFUSE,no addressee resolved - say a name or 'everyone',148.9,False,,,voice
+1786320224.287626,a3c497ec,everyone move up 1M,UP,Horus|Ra|Thoth,{'dist': 100},0.935,EXECUTE,,142.5,True,,,voice
+1786320232.9043164,3ef352e4,1 m,UP,,{'dist': 100},0.409,REFUSE,no addressee resolved - say a name or 'everyone',150.3,False,,,voice
+1786320237.009899,f73a1c19,Ra go down,TAKEOFF,Ra,{},0.656,CONFIRM,low confidence - confirm parse,130.5,False,,,voice
+1786320240.7847419,f73a1c19,(confirmed),TAKEOFF,Ra,{},,EXECUTE,,,True,yes,,
+1786320249.6735668,6b5cd245,Hooters go down 1M,DOWN,,{'dist': 100},0.904,REFUSE,no addressee resolved - say a name or 'everyone',186.6,False,,,voice
+1786320256.2349565,f17969cb,everyone go down 1M,DOWN,Horus|Ra|Thoth,{'dist': 100},0.875,EXECUTE,,142.6,True,,,voice
+1786320263.8343906,aabc6ccf,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,163.7,True,,,voice
+1786320304.6457014,47ed67d0,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,156.1,False,,,voice
+1786320313.613641,0a91f835,everyone hover for 5 seconds,HOVER,Horus|Ra|Thoth,{'duration': 5},0.781,CONFIRM,low confidence - confirm parse,128.4,False,,,voice
+1786320315.5358737,0a91f835,(confirmed),HOVER,Horus|Ra|Thoth,{'duration': 5},,EXECUTE,,,True,yes,,
+1786320322.7107418,28a1d7fb,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,130.0,False,,,voice
+1786320325.0302022,28a1d7fb,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786320333.8221624,d755cbb8,everyone hover for 5 seconds,HOVER,Horus|Ra|Thoth,{'duration': 5},0.781,CONFIRM,low confidence - confirm parse,137.3,False,,,voice
+1786320336.3547468,d755cbb8,(confirmed),HOVER,Horus|Ra|Thoth,{'duration': 5},,EXECUTE,,,True,yes,,
+1786320374.4305909,4d0fd932,everyone land,LAND,Horus|Ra|Thoth,{},0.95,EXECUTE,,185.3,True,,,voice
+1786322918.7285473,1a8dfe23,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,1525.1,False,,,voice
+1786322921.3122735,1a8dfe23,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786322936.5489757,726a53e0,everyone learns,TAKEOFF,Horus|Ra|Thoth,{},0.427,REFUSE,confidence too low,156.7,False,,,voice
+1786322941.1646628,59829cb6,land,LAND,Horus|Ra|Thoth,{},1.0,EMERGENCY,emergency override -> fleet-wide,0,True,,,
+1786507582.7538402,79209f35,"Everyone, take off",TAKEOFF,Horus|Ra|Thoth,{},0.968,EXECUTE,,1142.7,True,,,typed
+1786507604.483267,afdce3b4,"Yalla, everyone, land",LAND,Horus|Ra|Thoth,{},0.932,EXECUTE,,309.9,True,,,typed
+1786507622.085413,6da51c29,"Horus, take off",TAKEOFF,Horus,{},0.929,EXECUTE,,248.4,True,,,typed
+1786507640.653416,5000cd98,"Horus, land",LAND,Horus,{},0.834,CONFIRM,low confidence - confirm parse,361.2,False,,,typed
+1786507642.5390532,5000cd98,(confirmed),LAND,Horus,{},,EXECUTE,,,True,yes,,
+1786586452.1960342,d8a6f14f,"Horace, take off",TAKEOFF,Ra,{},0.718,CONFIRM,low confidence - confirm parse,1186.4,False,,,typed
+1786586453.9746497,d8a6f14f,(confirmed),TAKEOFF,Ra,{},,EXECUTE,,,True,yes,,
+1786586513.5401416,52aff54f,"Horace, take off",TAKEOFF,Ra,{},0.718,CONFIRM,low confidence - confirm parse,204.3,False,,,typed
+1786586514.6628852,52aff54f,(confirmed),TAKEOFF,Ra,{},,EXECUTE,,,True,yes,,
+1786586547.7689734,053f2489,"Thot, take off",TAKEOFF,Thoth,{},0.948,EXECUTE,,194.4,True,,,typed
+1786586576.4458172,4fd02714,"Horus and Osiris, land",LAND,Horus,{},0.938,EXECUTE,,197.5,True,,,typed
+1786586586.3121183,0ff47092,"all, land",LAND,Horus|Ra|Thoth,{},0.957,EXECUTE,,201.7,True,,,typed
+1786586608.4469123,bdfd7572,"Horus and Osiris, take off",TAKEOFF,Horus,{},0.868,EXECUTE,,191.7,True,,,typed
+1786595391.372276,5378f2c2,Horus take off,TAKEOFF,Horus,{},0.913,EXECUTE,,1452.9,True,,,voice
+1786595399.2285287,84da06b6,to take off,TAKEOFF,,{},0.851,REFUSE,no addressee resolved - say a name or 'everyone',223.2,False,,,voice
+1786595442.203711,2a286cc3,horus take off,TAKEOFF,Horus,{},0.942,EXECUTE,,213.8,True,,,typed
+1786595460.0678174,38e79c5d,everyone take off,TAKEOFF,Horus|Ra|Thoth,{},0.694,CONFIRM,low confidence - confirm parse,198.6,False,,,voice
+1786595462.1796644,38e79c5d,(confirmed),TAKEOFF,Horus|Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786595501.104517,ec4f2f6b,"yalla horus, land",LAND,Horus,{},0.673,CONFIRM,low confidence - confirm parse,209.1,False,,,typed
+1786595504.6326232,ec4f2f6b,(confirmed),LAND,Horus,{},,EXECUTE,,,True,yes,,
+1786595525.8899715,84224b91,"ra, yalla land",LAND,Ra,{},0.814,CONFIRM,low confidence - confirm parse,212.0,False,,,typed
+1786595531.1634254,84224b91,(confirmed),LAND,Ra,{},,EXECUTE,,,True,yes,,
+1786595555.7119699,e47e5ac6,thoth move forward 2 m,MOVE,Thoth,"{'dir': 'forward', 'dist': 150}",0.957,EXECUTE,,188.4,True,,,typed
+1786596072.5251584,2aa5e5bc,"yalla, horus, land",LAND,Horus,{},0.835,CONFIRM,low confidence - confirm parse,221.9,False,,,typed
+1786596073.63648,2aa5e5bc,(confirmed),LAND,Horus,{},,EXECUTE,,,True,yes,,
+1786596085.6381109,da792b4f,"yalla, ra, land",LAND,Ra,{},0.693,CONFIRM,low confidence - confirm parse,211.3,False,,,typed
+1786596087.2176387,da792b4f,(confirmed),LAND,Ra,{},,EXECUTE,,,True,yes,,
+1786596101.890505,ff0424db,"yalla, thoth, move backward 1 m",MOVE,Thoth,"{'dir': 'back', 'dist': 100}",0.678,CONFIRM,low confidence - confirm parse,208.8,False,,,typed
+1786596103.3653982,ff0424db,(confirmed),MOVE,Thoth,"{'dir': 'back', 'dist': 100}",,EXECUTE,,,True,yes,,
+1786596136.5838485,7b8c7177,"yalla ra and thoth, take off",TAKEOFF,Ra|Thoth,{},0.675,CONFIRM,low confidence - confirm parse,198.5,False,,,typed
+1786596137.6897957,7b8c7177,(confirmed),TAKEOFF,Ra|Thoth,{},,EXECUTE,,,True,yes,,
+1786596160.511449,9dd157b9,"yalla, thoth, move left 0.5 m",MOVE,Thoth,"{'dir': 'left', 'dist': 50}",0.771,CONFIRM,low confidence - confirm parse,191.0,False,,,typed
+1786596163.9904137,9dd157b9,(confirmed),MOVE,Thoth,"{'dir': 'left', 'dist': 50}",,EXECUTE,,,True,yes,,
+1786596174.7529182,8f54925d,"habibi, land , all",LAND,Horus|Ra|Thoth,{},0.967,EXECUTE,,188.9,True,,,typed

@@ -26,6 +26,8 @@ def _mentions(name, utt):
             if d <= 1: return "yes"
     return "no"
 
+IDXWORDS = {0:"drone one, first", 1:"drone two, second", 2:"drone three, third",
+            3:"drone four, fourth", 4:"drone five, fifth", 5:"drone six, sixth"}
 def load(path):
     return [json.loads(l) for l in open(path)]
 
@@ -148,7 +150,7 @@ def main():
     q_texts, q_y, q_name_split, q_excl = [], [], [], []
     for r in simple:
         for k, nm in enumerate(r["roster"]):
-            q_texts.append(f"drone: {nm} | index: {k} | mentioned: {_mentions(nm, r['utterance'])} | utterance: {r['utterance']}")
+            q_texts.append(f"drone: {nm} | index: {k} ({IDXWORDS.get(k,k)}) | mentioned: {_mentions(nm, r['utterance'])} | utterance: {r['utterance']}")
             q_y.append(float(r["target_labels"].get(nm, 0)))
             q_name_split.append(r["name_split"])
             q_excl.append(r["target_expr"]["type"]=="EXCEPT")

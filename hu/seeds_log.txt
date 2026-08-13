@@ -1,0 +1,45 @@
+  embed 131072/135530
+  embed 133120/135530
+  embed 135168/135530
+tuned tau = 0.42 (val F1 0.9587)
+   name Apis     acc = 0.720
+   name Heh      acc = 0.862
+   name Kek      acc = 0.911
+   name Neith    acc = 0.938
+   name Serqet   acc = 0.930
+   name Shu      acc = 0.898
+   name Tefnut   acc = 0.947
+   name Wadjet   acc = 0.855
+TARGET  HELD-OUT-NAME  F1 = 0.9228  P=0.930 R=0.916  (bar 0.95)
+TARGET  exclusion slice acc = 0.9304  (bar 0.90)
+saved -> hu/models/hu_heads_v1.pt
+  embed 131072/135530
+  embed 133120/135530
+  embed 135168/135530
+tuned tau = 0.44 (val F1 0.9576)
+   name Apis     acc = 0.686
+   name Heh      acc = 0.849
+   name Kek      acc = 0.884
+   name Neith    acc = 0.936
+   name Serqet   acc = 0.948
+   name Shu      acc = 0.863
+   name Tefnut   acc = 0.939
+   name Wadjet   acc = 0.877
+TARGET  HELD-OUT-NAME  F1 = 0.9173  P=0.934 R=0.901  (bar 0.95)
+TARGET  exclusion slice acc = 0.9236  (bar 0.90)
+saved -> hu/models/hu_heads_v1.pt
+  embed 131072/135530
+  embed 133120/135530
+  embed 135168/135530
+tuned tau = 0.36 (val F1 0.9553)
+   name Apis     acc = 0.679
+   name Heh      acc = 0.773
+   name Kek      acc = 0.908
+   name Neith    acc = 0.929
+   name Serqet   acc = 0.946
+   name Shu      acc = 0.905
+   name Tefnut   acc = 0.934
+   name Wadjet   acc = 0.879
+TARGET  HELD-OUT-NAME  F1 = 0.9135  P=0.918 R=0.910  (bar 0.95)
+TARGET  exclusion slice acc = 0.9132  (bar 0.90)
+saved -> hu/models/hu_heads_v1.pt

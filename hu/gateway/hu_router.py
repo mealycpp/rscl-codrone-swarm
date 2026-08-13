@@ -34,13 +34,57 @@ def translate(action, params):
     return None
 
 def make_hu_router(controller_holder, name_map=None):
+    _NM_DEFAULT = {"Horus": "D0", "Ra": "D1", "Thoth": "D2"}
+    _AIR = {"AIRBORNE", "HOVER", "TAKING OFF"}
+    _NEED_AIR = {"MOVE", "TURN", "UP", "DOWN", "HOVER"}
+
+    def _drone_states():
+        out = {}
+        ctrl = getattr(controller_holder, "controller", None) or \
+               getattr(controller_holder, "backend", None) or controller_holder
+        for attr in ("drones", "workers", "agents"):
+            seq = getattr(ctrl, attr, None)
+            if not seq: continue
+            it = seq.values() if hasattr(seq, "values") else seq
+            for w in it:
+                st = getattr(w, "state", w)
+                did = getattr(st, "drone_id", None) or getattr(w, "drone_id", None)
+                if did: out[did] = str(getattr(st, "flight_state", "UNKNOWN")).upper()
+            if out: break
+        return out
+
+    def do_dispatch(action, names, params):
+        act = str(action).upper()
+        if act in ("LAND", "STOP"):
+            return _do_dispatch_raw(action, names, params)
+        states = _drone_states(); nm = name_map or _NM_DEFAULT
+        eligible, skips = [], []
+        for n in names:
+            fs = states.get(nm.get(n, n), "UNKNOWN")
+            if fs == "UNKNOWN":
+                eligible.append(n); continue
+            if fs == "DETACHED":
+                skips.append(f"{n}: not connected"); continue
+            airborne = fs in _AIR
+            if act == "TAKEOFF" and airborne:
+                skips.append(f"{n}: already airborne"); continue
+            if act in _NEED_AIR and not airborne:
+                skips.append(f"{n}: on the ground - take off first"); continue
+            eligible.append(n)
+        if not eligible:
+            return False, "; ".join(skips) or "no eligible drones"
+        ok, err = _do_dispatch_raw(action, eligible, params)
+        if skips:
+            err = ((str(err) + " | ") if err else "") + "skipped: " + "; ".join(skips)
+        return ok, err
+
     """name_map: HU name -> fabric target id, e.g. {"Horus":"D0","Ra":"D1","Thoth":"D2"}"""
     router = APIRouter()
     hu = HU()
     nmap = name_map or {"Horus": "D0", "Ra": "D1", "Thoth": "D2"}
     pending = {}
 
-    def do_dispatch(action, targets, params):
+    def _do_dispatch_raw(action, targets, params):
         steps = translate(action, params)
         if steps is None:
             return False, "vertical motion not exposed by fabric v1"
@@ -79,7 +123,21 @@ def make_hu_router(controller_holder, name_map=None):
                 "band": "EMERGENCY", "reason": "emergency override -> fleet-wide",
                 "latency_ms": 0, "dispatched": ok})
         src = str(data.get("source", "typed"))
+        # Voice-channel ASR alias normalization (observed live transcripts).
+        # Mic input only; CSV logs the raw transcript upstream of nothing — utt is replaced here.
+        if src == "voice":
+            import re as _re
+            VOICE_ALIASES = {"rock":"Ra","prop":"Ra","roland":"Ra","raw":"Ra","rah":"Ra",
+                             "taurus":"Horus","horace":"Horus","chorus":"Horus","horis":"Horus",
+                             "toth":"Thoth","thought":"Thoth","thoss":"Thoth",
+                             "yella":"yalla","yallow":"yalla","yellow":"yalla","yala":"yalla","ya la":"yalla"}
+            for wrong, right in VOICE_ALIASES.items():
+                utt = _re.sub(rf"\b{wrong}\b", right, utt, flags=_re.IGNORECASE)
         r = hu.parse(utt)
+        if r.get('params', {}).get('range_violation'):
+            r['band'] = 'REFUSE'
+            r['reason'] = 'unsafe parameter: ' + str(r['params'].pop('range_violation'))
+
         cid = uuid.uuid4().hex[:8]
         dispatched, derr = False, ""
         if r["band"] == "EXECUTE":
